@@ -10,6 +10,7 @@ export interface IthisBoard {
 }
 export interface IreturnGameBoard {
 	placeShip: (ship: IreturnShip, y: number, x: number) => boolean;
+	receiveAttack: (y: number, x: number) => boolean;
 }
 
 function Gameboard(this: IthisBoard): IreturnGameBoard {
@@ -45,7 +46,12 @@ function Gameboard(this: IthisBoard): IreturnGameBoard {
 		if (!checkValidity(y, x, endx)) return false;
 
 		while (x != endx) {
-			this.board[y][x] = 1;
+			// #ships cannot overlap on top of eachother
+			if (this.board[y][x] === 0) {
+				this.board[y][x] = 1;
+			} else {
+				return false;
+			}
 			x++;
 		}
 		return true;
@@ -59,13 +65,19 @@ function Gameboard(this: IthisBoard): IreturnGameBoard {
 		let endy = y + ship.getLength() - 1;
 		if (!checkValidity(y, x, endy)) return false;
 		while (y != endy) {
-			this.board[y][x] = 1;
+			// #ships cannot overlap on top of eachother
+			if (this.board[y][x] == 0) {
+				this.board[y][x] = 1;
+			} else {
+				return false;
+			}
 			y++;
 		}
 		return true;
 	};
 
 	const checkValidity = (y: number, x: number, end: number): boolean => {
+		//the ship should not cross the gameboard
 		if (x >= 10 || y >= 10) {
 			return false;
 		} else if (end < 10) {
@@ -75,7 +87,16 @@ function Gameboard(this: IthisBoard): IreturnGameBoard {
 		}
 	};
 
-	return { placeShip };
+	//Now when the ship receives attack
+	const receiveAttack = (y: number, x: number) => {
+		if (this.board[y][x] === 1) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	return { placeShip, receiveAttack };
 }
 
 export default Gameboard;
