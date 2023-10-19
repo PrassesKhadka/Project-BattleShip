@@ -7,8 +7,10 @@ import { Ilocation } from "../Gameboard";
 describe("Gameboard", () => {
 	let gameboard: ReturnType<typeof Gameboard>;
 
-	it("should place a ship horizontally", () => {
+	beforeEach(() => {
 		gameboard = Gameboard();
+	});
+	it("should place a ship horizontally", () => {
 		// a ship object mock
 		const ship: IreturnShip = {
 			getLength: () => 5,
@@ -21,55 +23,57 @@ describe("Gameboard", () => {
 		expect(gameboard.placeShip(ship, { x: 2, y: 6 })).toBe(false);
 	});
 
-	// it("should place a ship vertically", () => {
-	// 	// a ship object mock
-	// 	const ship: IreturnShip = {
-	// 		hit: () => null,
-	// 		isSunk: () => false,
-	// 		getIsHorizontal: () => false,
-	// 		getLength: () => 3,
-	// 	};
+	it("should place a ship vertically", () => {
+		const ship: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => false,
+		};
 
-	// 	expect(gameboard.placeShip(ship, { x: 0, y: 0 })).toBe(true);
-	// });
-	// it("should not place a ship outside the gameboard boundaries", () => {
-	// 	const ship: IreturnShip = {
-	// 		hit: () => null,
-	// 		isSunk: () => false,
-	// 		getIsHorizontal: () => true,
-	// 		getLength: () => 8,
-	// 	};
-	// 	const location: Ilocation = { x: 2, y: 2 };
+		expect(gameboard.placeShip(ship, { x: 0, y: 0 })).toBe(true);
+		expect(gameboard.placeShip(ship, { x: 6, y: 0 })).toBe(false);
+	});
 
-	// 	const result = gameboard.placeShip(ship, location);
+	it("ships should not overlap", () => {
+		const ship1: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => false,
+		};
+		const ship2: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => false,
+		};
+		gameboard.placeShip(ship1, { x: 0, y: 0 });
+		expect(gameboard.placeShip(ship2, { x: 0, y: 0 })).toBe(false);
+		expect(gameboard.placeShip(ship2, { x: 4, y: 0 })).toBe(false);
+		expect(gameboard.placeShip(ship2, { x: 5, y: 0 })).toBe(true);
+	});
 
-	// 	expect(result).toBe(false);
-	// 	// Add more expectations to check that the ship wasn't placed
-	// });
+	it("ship cannot be placed outside the gameboard", () => {
+		// horizontal ship
+		const ship1: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => true,
+		};
+		// vertical ship
+		const ship2: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => false,
+		};
 
-	// it("should not place a ship if it overlaps with another ship", () => {
-	// 	// Place a ship to create an overlap
-	// 	const firstShip: IreturnShip = {
-	// 		hit: () => null,
-	// 		isSunk: () => false,
-	// 		getIsHorizontal: () => true,
-	// 		getLength: () => 3,
-	// 	};
-	// 	const firstLocation: Ilocation = { x: 2, y: 2 };
-	// 	gameboard.placeShip(firstShip, firstLocation);
-
-	// 	// Try to place another ship that overlaps with the first one
-	// 	const secondShip: IreturnShip = {
-	// 		hit: () => null,
-	// 		isSunk: () => false,
-	// 		getIsHorizontal: () => true,
-	// 		getLength: () => 2,
-	// 	};
-	// 	const secondLocation: Ilocation = { x: 2, y: 3 };
-
-	// 	const result = gameboard.placeShip(secondShip, secondLocation);
-
-	// 	expect(result).toBe(false);
-	// 	// Add more expectations to check that the ship wasn't placed
-	// });
+		// checking for horizontal ship
+		expect(gameboard.placeShip(ship1, { x: 0, y: 10 })).toBe(false);
+		expect(gameboard.placeShip(ship2, { x: 11, y: 4 })).toBe(false);
+		expect(gameboard.placeShip(ship1, { x: 2, y: 6 })).toBe(false);
+		expect(gameboard.placeShip(ship2, { x: 6, y: 4 })).toBe(false);
+	});
 });
