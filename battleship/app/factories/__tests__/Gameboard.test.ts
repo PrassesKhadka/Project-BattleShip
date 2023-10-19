@@ -76,4 +76,22 @@ describe("Gameboard", () => {
 		expect(gameboard.placeShip(ship1, { x: 2, y: 6 })).toBe(false);
 		expect(gameboard.placeShip(ship2, { x: 6, y: 4 })).toBe(false);
 	});
+
+	// Testing for receiveAttack
+	it("ships receives attack", () => {
+		const ship1: IreturnShip = {
+			getLength: () => 5,
+			hit: () => null,
+			isSunk: () => false,
+			getIsHorizontal: () => true,
+		};
+		gameboard.placeShip(ship1, { x: 4, y: 4 });
+		const result1 = gameboard.receiveAttack({ x: 4, y: 4 });
+		expect(result1).toBe(true);
+		gameboard.placeShip(ship1, { x: 0, y: 0 });
+		const result2 = gameboard.receiveAttack({ x: 0, y: 4 });
+		expect(result2).toBe(true);
+		const result3 = gameboard.receiveAttack({ x: 0, y: 5 });
+		expect(result3).toBe(false);
+	});
 });

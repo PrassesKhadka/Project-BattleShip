@@ -5,14 +5,17 @@ import { IreturnShip, IthisShip } from "./Ship";
 // The size of the gameboard array
 const m = 10;
 
+// Declaring the types and interfaces here
 export interface Ilocation {
 	x: number;
 	y: number;
 }
 export interface IreturnGameBoard {
 	placeShip: (ship: IreturnShip, location: Ilocation) => boolean;
+	receiveAttack: (location: Ilocation) => boolean;
 }
 
+// #The main factory function Gameboard
 export default function Gameboard(): IreturnGameBoard {
 	// Fill the 10*10 array with 0
 	const board = Array(m)
@@ -31,7 +34,21 @@ export default function Gameboard(): IreturnGameBoard {
 		}
 	}
 
-	// Funciton to check the validity
+	//Now when the ship receives attack
+	function receiveAttack(location: Ilocation): boolean {
+		if (
+			board[location.x][location.y] === 0 ||
+			board[location.x][location.y] === 2
+		) {
+			return false;
+		} else {
+			let ship = board[location.x][location.y].ship;
+			ship.hit();
+			return true;
+		}
+	}
+
+	// Function to check the validity
 	function checkValidity(ship: IreturnShip, location: Ilocation): boolean {
 		let end;
 		// Checking the end coordinates
@@ -56,14 +73,14 @@ export default function Gameboard(): IreturnGameBoard {
 		else if (ship.getIsHorizontal()) {
 			let y = location.y;
 			while (y != end + 1) {
-				if (board[location.x][y] === 1) return false;
+				if (board[location.x][y] != 0) return false;
 				y++;
 			}
 			return true;
 		} else {
 			let x = location.x;
 			while (x != end + 1) {
-				if (board[x][location.y] === 1) return false;
+				if (board[x][location.y] != 0) return false;
 				x++;
 			}
 			return true;
@@ -75,7 +92,7 @@ export default function Gameboard(): IreturnGameBoard {
 		let end = location.x + ship.getLength() - 1;
 		let y = location.y;
 		while (y != end + 1) {
-			board[location.x][y] = 1;
+			board[location.x][y] = { ship };
 			y++;
 		}
 		return true;
@@ -86,13 +103,11 @@ export default function Gameboard(): IreturnGameBoard {
 		let end = location.y + ship.getLength() - 1;
 		let x = location.x;
 		while (x != end + 1) {
-			board[x][location.y] = 1;
+			board[x][location.y] = { ship };
 			x++;
 		}
 		return true;
 	}
 
-	//Now when the ship receives attack
-
-	return { placeShip };
+	return { placeShip, receiveAttack };
 }
