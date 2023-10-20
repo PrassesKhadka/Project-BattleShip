@@ -5,7 +5,7 @@ import { IreturnShip } from "./Ship";
 // The size of the gameboard array
 const m = 10;
 // The number of ships
-const n = 5;
+const n = 2;
 
 // Declaring the types and interfaces here
 type TindexArray = { x: number; y: number }[];
@@ -70,9 +70,9 @@ export default function Gameboard(): IreturnGameBoard {
 	function hit(location: Ilocation, boardData: IreturnShip): string {
 		hitindex.push({ x: location.x, y: location.y });
 		boardData.hit();
-		if (boardData.isSunk()) {
+		if (checkSunk(boardData)) {
 			if (allShipSunk()) {
-				return "All ships shunk";
+				return "All ships sunk";
 			} else {
 			}
 			return "Ship is sunk";
@@ -80,7 +80,14 @@ export default function Gameboard(): IreturnGameBoard {
 			return "You have successfully hit the ship";
 		}
 	}
-
+	function checkSunk(boardData: IreturnShip): boolean {
+		if (boardData.isSunk()) {
+			sunkShips.push(boardData);
+			return true;
+		} else {
+			return false;
+		}
+	}
 	function allShipSunk(): boolean {
 		if (sunkShips.length === n) {
 			return true;
@@ -130,7 +137,7 @@ export default function Gameboard(): IreturnGameBoard {
 
 	// Function to place ships Horizontally
 	function placeHorizontally(ship: IreturnShip, location: Ilocation) {
-		let end = location.x + ship.getLength() - 1;
+		let end = location.y + ship.getLength() - 1;
 		let y = location.y;
 		while (y != end + 1) {
 			board[location.x][y] = ship;
@@ -142,7 +149,7 @@ export default function Gameboard(): IreturnGameBoard {
 
 	// Function to place ships vertically
 	function placeVertically(ship: IreturnShip, location: Ilocation) {
-		let end = location.y + ship.getLength() - 1;
+		let end = location.x + ship.getLength() - 1;
 		let x = location.x;
 		while (x != end + 1) {
 			board[x][location.y] = ship;
