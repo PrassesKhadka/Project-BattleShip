@@ -1,26 +1,37 @@
 // Creating a Gameboard factory function
 
-import { IreturnShip, IthisShip } from "./Ship";
+import { IreturnShip } from "./Ship";
 
 // The size of the gameboard array
 const m = 10;
+// The number of ships
+const n = 5;
 
 // Declaring the types and interfaces here
+type TindexArray = { x: number; y: number }[];
+type TboardData = 0 | IreturnShip;
 export interface Ilocation {
 	x: number;
 	y: number;
 }
 export interface IreturnGameBoard {
+	board: TboardData[][];
 	placeShip: (ship: IreturnShip, location: Ilocation) => boolean;
-	receiveAttack: (location: Ilocation) => boolean;
+	receiveAttack: (location: Ilocation) => string;
 }
 
 // #The main factory function Gameboard
 export default function Gameboard(): IreturnGameBoard {
+	//Private datas of Gameboard defined
 	// Fill the 10*10 array with 0
 	const board = Array(m)
 		.fill([])
 		.map(() => Array(m).fill(0));
+	let hitindex: TindexArray = [];
+	let missindex: TindexArray = [];
+	let occupiedindex: TindexArray = [];
+	let sunkShips: IreturnShip[] = [];
+	// Private datas of Gameboard definition ends
 
 	// Place the ship in the 10*10 gameboard array(this.board) in the given coordinate
 	function placeShip(ship: IreturnShip, location: Ilocation): boolean {
@@ -35,16 +46,46 @@ export default function Gameboard(): IreturnGameBoard {
 	}
 
 	//Now when the ship receives attack
-	function receiveAttack(location: Ilocation): boolean {
+	function receiveAttack(location: Ilocation): string {
+		let boardData: TboardData = board[location.x][location.y];
+		// checking if the attack is done on the previously hit or miss shot first
 		if (
-			board[location.x][location.y] === 0 ||
-			board[location.x][location.y] === 2
+			// .includes causes referential checking so .some used
+			hitindex.some((item) => item.x === location.x && item.y === location.y) ||
+			missindex.some((item) => item.x === location.x && item.y === location.y)
 		) {
-			return false;
+			return "Sorry previously Hit index !!!";
+		} else if (boardData === 0) {
+			return miss(location);
 		} else {
-			let ship = board[location.x][location.y].ship;
-			ship.hit();
+			return hit(location, boardData);
+		}
+	}
+
+	function miss(location: Ilocation): string {
+		missindex.push({ x: location.x, y: location.y });
+		return "You have missed the shot";
+	}
+
+	function hit(location: Ilocation, boardData: IreturnShip): string {
+		hitindex.push({ x: location.x, y: location.y });
+		boardData.hit();
+		if (boardData.isSunk()) {
+			if (allShipSunk()) {
+				return "All ships shunk";
+			} else {
+			}
+			return "Ship is sunk";
+		} else {
+			return "You have successfully hit the ship";
+		}
+	}
+
+	function allShipSunk(): boolean {
+		if (sunkShips.length === n) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -65,7 +106,7 @@ export default function Gameboard(): IreturnGameBoard {
 		else if (ship.getLength() > m - 1) {
 			return false;
 		}
-		// 3rd case:end coordinates should be within the gameboard
+		// 3rd case: end coordinates should be within the gameboard
 		else if (end > m - 1) {
 			return false;
 		}
@@ -92,7 +133,8 @@ export default function Gameboard(): IreturnGameBoard {
 		let end = location.x + ship.getLength() - 1;
 		let y = location.y;
 		while (y != end + 1) {
-			board[location.x][y] = { ship };
+			board[location.x][y] = ship;
+			occupiedindex.push({ x: location.x, y: y });
 			y++;
 		}
 		return true;
@@ -103,11 +145,16 @@ export default function Gameboard(): IreturnGameBoard {
 		let end = location.y + ship.getLength() - 1;
 		let x = location.x;
 		while (x != end + 1) {
-			board[x][location.y] = { ship };
+			board[x][location.y] = ship;
+			occupiedindex.push({ x: x, y: location.y });
 			x++;
 		}
 		return true;
 	}
 
-	return { placeShip, receiveAttack };
+	return {
+		board,
+		placeShip,
+		receiveAttack,
+	};
 }

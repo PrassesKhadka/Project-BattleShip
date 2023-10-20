@@ -4,10 +4,10 @@ import { Tplayer } from "./Player";
 
 export interface IreturnShip {
 	getLength: () => number;
+	getIsHorizontal: () => boolean;
+	getHits: () => number;
 	hit: () => boolean;
 	isSunk: () => boolean;
-	getHits: () => number;
-	getIsHorizontal: () => boolean;
 }
 
 function Ship(
