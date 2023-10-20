@@ -2,47 +2,44 @@
 
 import { Tplayer } from "./Player";
 
-export interface IthisShip {
-	length: number;
-	player: Tplayer;
-	hits: number;
-	isHorizontal: boolean;
-}
 export interface IreturnShip {
 	getLength: () => number;
-	hit: () => void;
+	hit: () => boolean;
 	isSunk: () => boolean;
+	getHits: () => number;
 	getIsHorizontal: () => boolean;
 }
 
 function Ship(
-	this: IthisShip,
 	length: number,
 	player: Tplayer,
 	isHorizontal: boolean
 ): IreturnShip {
-	this.length = length;
-	this.player = player;
-	this.hits = 0;
-	this.isHorizontal = isHorizontal;
+	let hits = 0;
 
 	const getLength = (): number => {
-		return this.length;
+		return length;
 	};
 	const getIsHorizontal = (): boolean => {
-		return this.isHorizontal;
+		return isHorizontal;
 	};
-
-	const hit = (): void => {
-		this.hits += 1;
+	const getHits = (): number => {
+		return hits;
+	};
+	const hit = (): boolean => {
+		hits++;
+		return true;
 	};
 
 	const isSunk = (): boolean => {
-		if (this.hits === this.length) return true;
-		else return false;
+		if (hits === length) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
-	return { getLength, getIsHorizontal, hit, isSunk };
+	return { getLength, getIsHorizontal, getHits, hit, isSunk };
 }
 
 export default Ship;

@@ -1,24 +1,17 @@
 import Gameboard from "../Gameboard";
-import Ship, { IreturnShip, IthisShip } from "../Ship";
+import Ship, { IreturnShip } from "../Ship";
 
 describe("Ship factory function", () => {
-	it("test hit functionality", () => {
-		// const gameboard = Gameboard.call();
-		// 	// mock a ship object first
-		// 	const ship: IreturnShip = {
-		// 		getLength: () => 4,
-		// 		getDirection: () => "horizontal",
-		// 		hit: () => null,
-		// 		isSunk: () => false,
-		// 	};
-		// 	// placing the ship in [3,4] coordinate of the game board
-		// 	gameboard.placeShip(ship, 3, 4);
-		// 	ship.hit();
-		// 	expect(ship.isSunk()).toBe(false);
-		// 	//now if we sink the ship
-		// 	for (let i = 0; i < ship.getLength(); i++) {
-		// 		ship.hit();
-		// 	}
-		// 	expect(ship.isSunk()).toBe(true);
+	it("test isSunk functionality", () => {
+		const gameboard = Gameboard();
+		const ship = Ship(3, "you", true);
+		expect(ship.isSunk()).toBe(false);
+		gameboard.placeShip(ship, { x: 0, y: 0 });
+		gameboard.receiveAttack({ x: 0, y: 0 });
+		gameboard.receiveAttack({ x: 0, y: 1 });
+		expect(ship.isSunk()).toBe(false);
+		gameboard.receiveAttack({ x: 0, y: 2 });
+		expect(ship.isSunk()).toBe(true);
+		expect(ship.getHits()).toBe(3);
 	});
 });
