@@ -8,7 +8,7 @@ const m = 10;
 const n = 5;
 
 // Declaring the types and interfaces here
-type TboardData = 0 | IreturnShip;
+export type TboardData = 0 | IreturnShip;
 export interface Ilocation {
 	x: number;
 	y: number;
@@ -105,14 +105,16 @@ export default function Gameboard(): IreturnGameBoard {
 	// Function to check the validity
 	function checkValidity(ship: IreturnShip, location: Ilocation): boolean {
 		let end;
+		let x = location.x;
+		let y = location.y;
 		// Checking the end coordinates
 		if (ship.getIsHorizontal()) {
-			end = location.y + ship.getLength() - 1;
+			end = y + ship.getLength() - 1;
 		} else {
-			end = location.x + ship.getLength() - 1;
+			end = x + ship.getLength() - 1;
 		}
 		// 1st case:the starting coordinate should be within the gameboard
-		if (location.x < 0 || location.x > m || location.y < 0 || location.y > m) {
+		if (x < 0 || x > m || y < 0 || y > m) {
 			return false;
 		}
 		// 2nd case: the ship's length should be within the gameboard
@@ -127,14 +129,14 @@ export default function Gameboard(): IreturnGameBoard {
 		else if (ship.getIsHorizontal()) {
 			let y = location.y;
 			while (y != end + 1) {
-				if (board[location.x][y] != 0) return false;
+				if (board[x][y] != 0) return false;
 				y++;
 			}
 			return true;
 		} else {
 			let x = location.x;
 			while (x != end + 1) {
-				if (board[x][location.y] != 0) return false;
+				if (board[x][y] != 0) return false;
 				x++;
 			}
 			return true;

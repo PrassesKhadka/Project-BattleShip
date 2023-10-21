@@ -2,7 +2,6 @@
 
 import Gameboard from "../Gameboard";
 import Ship, { IreturnShip } from "../Ship";
-import { Ilocation } from "../Gameboard";
 
 describe("Gameboard", () => {
 	let gameboard: ReturnType<typeof Gameboard>;

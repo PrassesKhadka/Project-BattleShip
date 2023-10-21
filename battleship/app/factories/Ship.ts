@@ -1,7 +1,5 @@
 // Creating a Ship factory function
 
-import { Tplayer } from "./Player";
-
 export interface IreturnShip {
 	getLength: () => number;
 	getIsHorizontal: () => boolean;

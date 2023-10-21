@@ -1,5 +1,11 @@
-import Image from "next/image";
+"use client";
+import React from "react";
+import Main from "./components/Main";
 
 export default function Home() {
-  return <div>Hello World!!!</div>;
+	return (
+		<div className="flex w-screen justify-center items-center">
+			<Main />
+		</div>
+	);
 }
