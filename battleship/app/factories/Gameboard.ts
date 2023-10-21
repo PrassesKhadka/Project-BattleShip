@@ -5,10 +5,9 @@ import { IreturnShip } from "./Ship";
 // The size of the gameboard array
 const m = 10;
 // The number of ships
-const n = 2;
+const n = 5;
 
 // Declaring the types and interfaces here
-type TindexArray = { x: number; y: number }[];
 type TboardData = 0 | IreturnShip;
 export interface Ilocation {
 	x: number;
@@ -16,6 +15,9 @@ export interface Ilocation {
 }
 export interface IreturnGameBoard {
 	board: TboardData[][];
+	hitIndex: Ilocation[];
+	missIndex: Ilocation[];
+	occupiedIndex: Ilocation[];
 	placeShip: (ship: IreturnShip, location: Ilocation) => boolean;
 	receiveAttack: (location: Ilocation) => string;
 }
@@ -27,9 +29,9 @@ export default function Gameboard(): IreturnGameBoard {
 	const board = Array(m)
 		.fill([])
 		.map(() => Array(m).fill(0));
-	let hitindex: TindexArray = [];
-	let missindex: TindexArray = [];
-	let occupiedindex: TindexArray = [];
+	let hitIndex: Ilocation[] = [];
+	let missIndex: Ilocation[] = [];
+	let occupiedIndex: Ilocation[] = [];
 	let sunkShips: IreturnShip[] = [];
 	// Private datas of Gameboard definition ends
 
@@ -51,8 +53,12 @@ export default function Gameboard(): IreturnGameBoard {
 		// checking if the attack is done on the previously hit or miss shot first
 		if (
 			// .includes causes referential checking so .some used
-			hitindex.some((item) => item.x === location.x && item.y === location.y) ||
-			missindex.some((item) => item.x === location.x && item.y === location.y)
+			hitIndex.some(
+				(item: Ilocation) => item.x === location.x && item.y === location.y
+			) ||
+			missIndex.some(
+				(item: Ilocation) => item.x === location.x && item.y === location.y
+			)
 		) {
 			return "Sorry previously Hit index !!!";
 		} else if (boardData === 0) {
@@ -63,12 +69,12 @@ export default function Gameboard(): IreturnGameBoard {
 	}
 
 	function miss(location: Ilocation): string {
-		missindex.push({ x: location.x, y: location.y });
+		missIndex.push({ x: location.x, y: location.y });
 		return "You have missed the shot";
 	}
 
 	function hit(location: Ilocation, boardData: IreturnShip): string {
-		hitindex.push({ x: location.x, y: location.y });
+		hitIndex.push({ x: location.x, y: location.y });
 		boardData.hit();
 		if (checkSunk(boardData)) {
 			if (allShipSunk()) {
@@ -141,7 +147,7 @@ export default function Gameboard(): IreturnGameBoard {
 		let y = location.y;
 		while (y != end + 1) {
 			board[location.x][y] = ship;
-			occupiedindex.push({ x: location.x, y: y });
+			occupiedIndex.push({ x: location.x, y: y });
 			y++;
 		}
 		return true;
@@ -153,7 +159,7 @@ export default function Gameboard(): IreturnGameBoard {
 		let x = location.x;
 		while (x != end + 1) {
 			board[x][location.y] = ship;
-			occupiedindex.push({ x: x, y: location.y });
+			occupiedIndex.push({ x: x, y: location.y });
 			x++;
 		}
 		return true;
@@ -161,6 +167,9 @@ export default function Gameboard(): IreturnGameBoard {
 
 	return {
 		board,
+		hitIndex,
+		missIndex,
+		occupiedIndex,
 		placeShip,
 		receiveAttack,
 	};

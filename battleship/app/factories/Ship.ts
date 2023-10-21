@@ -10,11 +10,7 @@ export interface IreturnShip {
 	isSunk: () => boolean;
 }
 
-function Ship(
-	length: number,
-	player: Tplayer,
-	isHorizontal: boolean
-): IreturnShip {
+function Ship(length: number, isHorizontal: boolean): IreturnShip {
 	let hits = 0;
 
 	const getLength = (): number => {
