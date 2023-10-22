@@ -10,14 +10,24 @@ describe("Player factory", () => {
 	});
 
 	it("tests attack function", () => {
+		player1.toggleIsTurn();
 		const message: string = player1.attack(player2, { x: 0, y: 0 });
 		expect(message.toUpperCase()).toBe(
-			"Prasses you have missed the shot".toUpperCase()
+			"Prasses, you have missed the shot".toUpperCase()
 		);
 	});
 
 	it("randomly places ship", () => {
 		expect(player1.randomlyAddShip()).toBe(true);
-		console.log(player1.getGameBoard());
+	});
+
+	it("check turn", () => {
+		player1.toggleIsTurn();
+		expect(player1.attack(player2, { x: 0, y: 0 })).toBe(
+			"Prasses, You have missed the shot"
+		);
+		expect(player2.attack(player1, { x: 0, y: 0 })).toBe(
+			"Computer, it's not your turn !! Chill 😮‍💨"
+		);
 	});
 });

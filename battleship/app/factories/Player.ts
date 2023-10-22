@@ -8,12 +8,18 @@ export interface IreturnPlayer {
 	getGameBoard: () => IreturnGameBoard;
 	attack: (opponent: IreturnPlayer, location: Ilocation) => string;
 	randomlyAddShip: () => boolean;
+	toggleIsTurn: () => boolean;
 }
 
 export default function Player(name: string) {
 	const gameboard: IreturnGameBoard = Gameboard();
 	const Ships: IreturnShip[] = [];
+	let isTurn: boolean = false;
 
+	function toggleIsTurn(): boolean {
+		isTurn = !isTurn;
+		return isTurn;
+	}
 	function getGameBoard(): IreturnGameBoard {
 		return gameboard;
 	}
@@ -21,9 +27,13 @@ export default function Player(name: string) {
 		return name;
 	}
 	function attack(opponent: IreturnPlayer, location: Ilocation): string {
-		const opponentGameBoard = opponent.getGameBoard();
-		const message = opponentGameBoard.receiveAttack(location);
-		return `${name}, ${message}`;
+		if (isTurn === true) {
+			const opponentGameBoard = opponent.getGameBoard();
+			const message = opponentGameBoard.receiveAttack(location);
+			return `${name}, ${message}`;
+		} else {
+			return `${name}, it's not your turn !! Chill 😮‍💨`;
+		}
 	}
 	function randomlyAddShip(): boolean {
 		let length = 2;
@@ -64,5 +74,11 @@ export default function Player(name: string) {
 		return location;
 	}
 
-	return { getName, getGameBoard, attack, randomlyAddShip };
+	return {
+		getName,
+		getGameBoard,
+		attack,
+		randomlyAddShip,
+		toggleIsTurn,
+	};
 }
