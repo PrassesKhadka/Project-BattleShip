@@ -23,7 +23,7 @@ export default function Player(name: string) {
 	function attack(opponent: IreturnPlayer, location: Ilocation): string {
 		const opponentGameBoard = opponent.getGameBoard();
 		const message = opponentGameBoard.receiveAttack(location);
-		return `${name} ${message}`;
+		return `${name}, ${message}`;
 	}
 	function randomlyAddShip(): boolean {
 		let length = 2;

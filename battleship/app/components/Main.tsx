@@ -22,9 +22,9 @@ const Main = () => {
 	player2.randomlyAddShip();
 
 	return (
-		<div className=" bg-blue-400 w-screen">
+		<div className=" w-screen">
 			{/* Board wrapper */}
-			<div className="flex justify-center items-center gap-5">
+			<div className="flex flex-wrap justify-center items-center gap-5">
 				<Board board={board1} player={player1} opponent={player2} />
 				<Board board={board2} player={player2} opponent={player1} />
 			</div>
