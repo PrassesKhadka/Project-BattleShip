@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
 	Ilocation,
@@ -23,8 +23,16 @@ const Board = (props: Props) => {
 	// when onClick on the gameboard
 	const shot = (i: number, j: number) => {
 		setMessage(opponent.attack(player, { x: i, y: j }));
-		setHitIndex(player.getGameBoard().hitIndex);
-		setMissIndex(player.getGameBoard().missIndex);
+
+		// Here due to asynchronous nature of 'setState',
+		// React batches multiple setStates(in our case
+		// setHitIndex,setMissIndex and setMessage) and updates these state in a single batch
+		// Thus used functional form of 'setState'
+		if (player.getGameBoard().board[i][j] != 0) {
+			setHitIndex((prev) => [...prev, { x: i, y: j }]);
+		} else {
+			setMissIndex((prev) => [...prev, { x: i, y: j }]);
+		}
 	};
 
 	return (
