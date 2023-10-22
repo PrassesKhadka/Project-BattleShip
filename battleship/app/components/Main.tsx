@@ -14,6 +14,8 @@ const Main = () => {
 	const player1Gameboard = player1.getGameBoard();
 	board1 = player1Gameboard.board;
 	player1.randomlyAddShip();
+	// setting player1's turn first
+	player1.toggleIsTurn();
 
 	// For player2
 	const player2 = Player("Computer");

@@ -8,6 +8,7 @@ export interface IreturnPlayer {
 	getGameBoard: () => IreturnGameBoard;
 	attack: (opponent: IreturnPlayer, location: Ilocation) => string;
 	randomlyAddShip: () => boolean;
+	getIsTurn: () => boolean;
 	toggleIsTurn: () => boolean;
 }
 
@@ -18,6 +19,9 @@ export default function Player(name: string) {
 
 	function toggleIsTurn(): boolean {
 		isTurn = !isTurn;
+		return isTurn;
+	}
+	function getIsTurn(): boolean {
 		return isTurn;
 	}
 	function getGameBoard(): IreturnGameBoard {
@@ -79,6 +83,7 @@ export default function Player(name: string) {
 		getGameBoard,
 		attack,
 		randomlyAddShip,
+		getIsTurn,
 		toggleIsTurn,
 	};
 }

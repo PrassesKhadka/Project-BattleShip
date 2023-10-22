@@ -23,15 +23,16 @@ const Board = (props: Props) => {
 	// when onClick on the gameboard
 	const shot = (i: number, j: number) => {
 		setMessage(opponent.attack(player, { x: i, y: j }));
-
-		// Here due to asynchronous nature of 'setState',
-		// React batches multiple setStates(in our case
-		// setHitIndex,setMissIndex and setMessage) and updates these state in a single batch
-		// Thus used functional form of 'setState'
-		if (player.getGameBoard().board[i][j] != 0) {
-			setHitIndex((prev) => [...prev, { x: i, y: j }]);
-		} else {
-			setMissIndex((prev) => [...prev, { x: i, y: j }]);
+		if (opponent.getIsTurn()) {
+			if (player.getGameBoard().board[i][j] != 0) {
+				setHitIndex((prev) => [...prev, { x: i, y: j }]);
+				player.toggleIsTurn();
+				opponent.toggleIsTurn();
+			} else {
+				setMissIndex((prev) => [...prev, { x: i, y: j }]);
+				opponent.toggleIsTurn();
+				player.toggleIsTurn();
+			}
 		}
 	};
 
