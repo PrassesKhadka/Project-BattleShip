@@ -39,7 +39,7 @@ const Board = (props: Props) => {
 	return (
 		<div className="mt-4 border-black border-4 max-w-[90%]">
 			<div className="bg-pink-400 text-red-800 p-4 font-bold border-b-4 border-b-black ">
-				<MessageBoard message={message} />
+				<MessageBoard message={message} player={player} />
 			</div>
 			<div className="p-1 m-1">
 				{board.map((value: TboardData[], i) => {

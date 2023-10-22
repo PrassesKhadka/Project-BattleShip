@@ -1,16 +1,24 @@
 import React from "react";
 import { useState } from "react";
+import { IreturnPlayer } from "../factories/Player";
 
 interface Props {
 	message: string;
+	player: IreturnPlayer;
 }
 
 const MessageBoard = (props: Props) => {
-	const { message } = props;
+	const { message, player } = props;
 	return (
-		<div className="flex justify-center items-center text-center">
-			{message ? message.toUpperCase() : "Let's Start the Game"}
-		</div>
+		<>
+			<div className=" text-center">
+				<div>
+					{message
+						? message.toUpperCase()
+						: `${player.getName()}, This is your GameBoard`}
+				</div>
+			</div>
+		</>
 	);
 };
 
