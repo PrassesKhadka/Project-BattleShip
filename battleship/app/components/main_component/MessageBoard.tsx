@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { IreturnPlayer } from "../factories/Player";
+import { IreturnPlayer } from "../../factories/Player";
 
 interface Props {
 	message: string;
@@ -11,11 +11,11 @@ const MessageBoard = (props: Props) => {
 	const { message, player } = props;
 	return (
 		<>
-			<div className=" text-center">
-				<div> 
+			<div className=" text-center ">
+				<div>
 					{message
 						? message.toUpperCase()
-						: `${player.getName()}, This is your GameBoard`}
+						: `${player.getName()}, This is your GameBoard`.toUpperCase()}
 				</div>
 			</div>
 		</>

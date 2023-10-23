@@ -4,8 +4,8 @@ import {
 	Ilocation,
 	IreturnGameBoard,
 	TboardData,
-} from "../factories/Gameboard";
-import { IreturnPlayer } from "../factories/Player";
+} from "../../factories/Gameboard";
+import { IreturnPlayer } from "../../factories/Player";
 import MessageBoard from "./MessageBoard";
 
 interface Props {
@@ -21,7 +21,7 @@ const Board = (props: Props) => {
 	const [missIndex, setMissIndex] = useState<Ilocation[]>([]);
 
 	// when onClick on the gameboard
-	const shot = (i: number, j: number): void => {
+	function shot(i: number, j: number): void {
 		if (opponent.getIsTurn() === true) {
 			if (player.getGameBoard().board[i][j] != 0) {
 				setHitIndex((prev) => [...prev, { x: i, y: j }]);
@@ -32,21 +32,21 @@ const Board = (props: Props) => {
 		//after every attack, player turn toggles
 		const message = opponent.attack(player, { x: i, y: j });
 		setMessage(message);
-	};
+	}
 
 	return (
-		<div className="mt-4 border-black border-4 max-w-[90%]">
-			<div className="bg-pink-400 text-red-800 p-4 font-bold border-b-4 border-b-black ">
+		<div className=" border-black border-2 ">
+			<div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
 				<MessageBoard message={message} player={player} />
 			</div>
-			<div className="p-1 m-1">
+			<div className="p-1 bg-cyan-400">
 				{board.map((value: TboardData[], i) => {
 					return (
-						<div className="flex mt-2">
+						<div className="flex mt-1">
 							{value.map((data: TboardData, j) => {
 								return (
 									<div
-										className="border-4 border-blue-400 m-1 w-[35px] h-[35px] hover:cursor-crosshair bg-blue-300"
+										className="m-1 w-[35px] h-[35px] hover:cursor-crosshair bg-white border border-black"
 										onClick={() => {
 											shot(i, j);
 										}}>
@@ -57,7 +57,7 @@ const Board = (props: Props) => {
 												return false;
 											}
 										}) ? (
-											<div className="w-full h-full border-4 border-green-400  hover:cursor-not-allowed bg-green-300"></div>
+											<div className="w-full h-full hover:cursor-not-allowed bg-slate-800"></div>
 										) : missIndex.some((element) => {
 												if (element.x === i && element.y === j) {
 													return true;
@@ -65,7 +65,7 @@ const Board = (props: Props) => {
 													return false;
 												}
 										  }) ? (
-											<div className="w-full h-full border-4 border-red-400  hover:cursor-not-allowed bg-red-300"></div>
+											<div className="w-full h-full hover:cursor-not-allowed bg-gradient-to-r from-cyan-200 to-cyan-400"></div>
 										) : (
 											<div></div>
 										)}

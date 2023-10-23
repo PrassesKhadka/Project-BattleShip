@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Player from "../factories/Player";
-import Board from "./Board";
+import Board from "./main_component/Board";
 import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
 
 const Main = () => {
@@ -24,7 +24,7 @@ const Main = () => {
 	player2.randomlyAddShip();
 
 	return (
-		<div className=" w-screen">
+		<div className=" bg-[#5E5E5E] w-screen min-h-screen flex justify-center items-center">
 			{/* Board wrapper */}
 			<div className="flex flex-wrap justify-center items-center gap-5">
 				<Board board={board1} player={player1} opponent={player2} />
