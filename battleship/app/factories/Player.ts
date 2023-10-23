@@ -10,6 +10,7 @@ export interface IreturnPlayer {
 	randomlyAddShip: () => boolean;
 	getIsTurn: () => boolean;
 	toggleIsTurn: () => boolean;
+	randomlyHitShip: (opponent: IreturnPlayer) => Ilocation | boolean;
 }
 
 export default function Player(name: string) {
@@ -34,6 +35,8 @@ export default function Player(name: string) {
 		if (isTurn === true) {
 			const opponentGameBoard = opponent.getGameBoard();
 			const message = opponentGameBoard.receiveAttack(location);
+			toggleIsTurn();
+			opponent.toggleIsTurn();
 			return `${name}, ${message}`;
 		} else {
 			return `${name}, it's not your turn !! Chill 😮‍💨`;
@@ -58,6 +61,27 @@ export default function Player(name: string) {
 			length++;
 		}
 		return true;
+	}
+
+	function randomlyHitShip(opponent: IreturnPlayer): Ilocation | boolean {
+		if (isTurn) {
+			let randX = Math.floor(Math.random() * 10);
+			let randY = Math.floor(Math.random() * 10);
+			let randomLocation: Ilocation = { x: randX, y: randY };
+			let value = "";
+			while (value === "Sorry previously Hit index!!!") {
+				value = opponent.getGameBoard().receiveAttack(randomLocation);
+				randX = Math.floor(Math.random() * 10);
+				randY = Math.floor(Math.random() * 10);
+				randomLocation = { x: randX, y: randY };
+			}
+			toggleIsTurn();
+			opponent.toggleIsTurn();
+			console.log(randomLocation);
+			return randomLocation;
+		} else {
+			return false;
+		}
 	}
 
 	function getRandomBoolean(): boolean {
@@ -85,5 +109,6 @@ export default function Player(name: string) {
 		randomlyAddShip,
 		getIsTurn,
 		toggleIsTurn,
+		randomlyHitShip,
 	};
 }
