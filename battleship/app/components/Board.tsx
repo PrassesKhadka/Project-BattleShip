@@ -22,16 +22,16 @@ const Board = (props: Props) => {
 
 	// when onClick on the gameboard
 	const shot = (i: number, j: number): void => {
-		console.log(player.getIsTurn());
 		if (opponent.getIsTurn() === true) {
-			const message = opponent.attack(player, { x: i, y: j });
-			setMessage(message);
 			if (player.getGameBoard().board[i][j] != 0) {
 				setHitIndex((prev) => [...prev, { x: i, y: j }]);
 			} else {
 				setMissIndex((prev) => [...prev, { x: i, y: j }]);
 			}
 		}
+		//after every attack, player turn toggles
+		const message = opponent.attack(player, { x: i, y: j });
+		setMessage(message);
 	};
 
 	return (

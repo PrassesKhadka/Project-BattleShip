@@ -32,7 +32,7 @@ export default function Player(name: string) {
 		return name;
 	}
 	function attack(opponent: IreturnPlayer, location: Ilocation): string {
-		if (isTurn === true) {
+		if (isTurn) {
 			const opponentGameBoard = opponent.getGameBoard();
 			const message = opponentGameBoard.receiveAttack(location);
 			toggleIsTurn();
