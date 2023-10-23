@@ -12,7 +12,7 @@ const MessageBoard = (props: Props) => {
 	return (
 		<>
 			<div className=" text-center">
-				<div>
+				<div> 
 					{message
 						? message.toUpperCase()
 						: `${player.getName()}, This is your GameBoard`}

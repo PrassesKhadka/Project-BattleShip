@@ -21,17 +21,15 @@ const Board = (props: Props) => {
 	const [missIndex, setMissIndex] = useState<Ilocation[]>([]);
 
 	// when onClick on the gameboard
-	const shot = (i: number, j: number) => {
-		setMessage(opponent.attack(player, { x: i, y: j }));
-		if (opponent.getIsTurn()) {
+	const shot = (i: number, j: number): void => {
+		console.log(player.getIsTurn());
+		if (opponent.getIsTurn() === true) {
+			const message = opponent.attack(player, { x: i, y: j });
+			setMessage(message);
 			if (player.getGameBoard().board[i][j] != 0) {
 				setHitIndex((prev) => [...prev, { x: i, y: j }]);
-				player.toggleIsTurn();
-				opponent.toggleIsTurn();
 			} else {
 				setMissIndex((prev) => [...prev, { x: i, y: j }]);
-				opponent.toggleIsTurn();
-				player.toggleIsTurn();
 			}
 		}
 	};

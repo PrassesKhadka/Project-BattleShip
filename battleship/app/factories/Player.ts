@@ -77,7 +77,6 @@ export default function Player(name: string) {
 			}
 			toggleIsTurn();
 			opponent.toggleIsTurn();
-			console.log(randomLocation);
 			return randomLocation;
 		} else {
 			return false;
