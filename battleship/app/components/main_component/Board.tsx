@@ -26,7 +26,7 @@ const Board = (props: Props) => {
 		//Every second this useEffect will run
 		const intervalId = setInterval(() => {
 			setCount((prevCount) => !prevCount);
-		}, 1000);
+		}, 2000);
 
 		if (opponent.getName() === "Computer" && opponent.getIsTurn() === true) {
 			const result = opponent.randomlyHitShip(player);
@@ -34,13 +34,12 @@ const Board = (props: Props) => {
 				const i = result.randomLocation.x;
 				const j = result.randomLocation.y;
 				if (player.getGameBoard().board[i][j] != 0) {
-					
 					setHitIndex((prev) => [...prev, { x: i, y: j }]);
 				} else {
 					setMissIndex((prev) => [...prev, { x: i, y: j }]);
 				}
 				console.log(message);
-				setMessage((prev) => (prev = result.value));
+				setMessage((prev) => (prev = `Computer, ${result.value}`));
 				console.log(message);
 			}
 		}
