@@ -34,11 +34,14 @@ const Board = (props: Props) => {
 				const i = result.randomLocation.x;
 				const j = result.randomLocation.y;
 				if (player.getGameBoard().board[i][j] != 0) {
+					
 					setHitIndex((prev) => [...prev, { x: i, y: j }]);
 				} else {
 					setMissIndex((prev) => [...prev, { x: i, y: j }]);
 				}
-				setMessage(result.value);
+				console.log(message);
+				setMessage((prev) => (prev = result.value));
+				console.log(message);
 			}
 		}
 	}, [count]);

@@ -71,16 +71,14 @@ export default function Player(name: string) {
 		opponent: IreturnPlayer
 	): { randomLocation: Ilocation; value: string } | boolean {
 		if (isTurn) {
-			let randX = Math.floor(Math.random() * 10);
-			let randY = Math.floor(Math.random() * 10);
-			let randomLocation: Ilocation = { x: randX, y: randY };
 			let value = "";
-			while (value === "Sorry previously Hit index!!!") {
-				value = opponent.getGameBoard().receiveAttack(randomLocation);
-				randX = Math.floor(Math.random() * 10);
-				randY = Math.floor(Math.random() * 10);
+			let randomLocation: Ilocation;
+			do {
+				let randX = Math.floor(Math.random() * 10);
+				let randY = Math.floor(Math.random() * 10);
 				randomLocation = { x: randX, y: randY };
-			}
+				value = opponent.getGameBoard().receiveAttack(randomLocation);
+			} while (value === "Sorry previously Hit index !!!");
 			toggleIsTurn();
 			opponent.toggleIsTurn();
 			return { randomLocation, value };

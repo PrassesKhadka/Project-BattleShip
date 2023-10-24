@@ -34,6 +34,7 @@ describe("Player factory", () => {
 		);
 	});
 	it("randomlyHitShip functionality", () => {
+		player1.randomlyAddShip();
 		// not player1's turn
 		expect(player1.randomlyHitShip(player2)).toBe(false);
 		player1.toggleIsTurn();
@@ -43,6 +44,14 @@ describe("Player factory", () => {
 		expect(player1.randomlyHitShip(player2)).toBe(false);
 		// player2 attacks,now player1's turn
 		player2.attack(player1, { x: 0, y: 0 });
-		expect(player1.randomlyHitShip(player2)).not.toBe(false);
+
+		// Sorry previously hit index should not appear
+		for (let i = 0; i < 99; i++) {
+			expect(player1.randomlyHitShip(player2)).not.toBe(false);
+			let value = player2.randomlyHitShip(player1);
+			if (typeof value === "object") {
+				expect(value).not.toBe("Sorry previously Hit index !!!");
+			}
+		}
 	});
 });
