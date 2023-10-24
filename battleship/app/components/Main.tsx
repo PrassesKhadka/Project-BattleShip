@@ -4,8 +4,7 @@ import Board from "./main_component/Board";
 import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
 
 const Main = () => {
-	// States defined here->datas that keeps changing
-
+	useEffect(() => {});
 	let board1: TboardData[][] = [];
 	let board2: TboardData[][] = [];
 

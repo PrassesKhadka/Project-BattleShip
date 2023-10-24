@@ -20,18 +20,41 @@ const Board = (props: Props) => {
 	const [hitIndex, setHitIndex] = useState<Ilocation[]>([]);
 	const [missIndex, setMissIndex] = useState<Ilocation[]>([]);
 
+	const [count, setCount] = useState<boolean>(false);
+
+	useEffect(() => {
+		//Every second this useEffect will run
+		const intervalId = setInterval(() => {
+			setCount((prevCount) => !prevCount);
+		}, 1000);
+
+		if (opponent.getName() === "Computer" && opponent.getIsTurn() === true) {
+			const result = opponent.randomlyHitShip(player);
+			if (typeof result === "object") {
+				const i = result.randomLocation.x;
+				const j = result.randomLocation.y;
+				if (player.getGameBoard().board[i][j] != 0) {
+					setHitIndex((prev) => [...prev, { x: i, y: j }]);
+				} else {
+					setMissIndex((prev) => [...prev, { x: i, y: j }]);
+				}
+				setMessage(result.value);
+			}
+		}
+	}, [count]);
+
 	// when onClick on the gameboard
 	function shot(i: number, j: number): void {
-		if (opponent.getIsTurn() === true) {
+		if (opponent.getName() != "Computer" && opponent.getIsTurn() === true) {
 			if (player.getGameBoard().board[i][j] != 0) {
 				setHitIndex((prev) => [...prev, { x: i, y: j }]);
 			} else {
 				setMissIndex((prev) => [...prev, { x: i, y: j }]);
 			}
+			//after every attack, player turn toggles
+			const message = opponent.attack(player, { x: i, y: j });
+			setMessage(message);
 		}
-		//after every attack, player turn toggles
-		const message = opponent.attack(player, { x: i, y: j });
-		setMessage(message);
 	}
 
 	return (
