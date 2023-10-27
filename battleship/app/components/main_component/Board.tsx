@@ -26,7 +26,7 @@ const Board = (props: Props) => {
 		//Every second this useEffect will run
 		const intervalId = setInterval(() => {
 			setCount((prevCount) => !prevCount);
-		}, 2000);
+		}, 1000);
 
 		if (opponent.getName() === "Computer" && opponent.getIsTurn() === true) {
 			const result = opponent.randomlyHitShip(player);
@@ -61,17 +61,17 @@ const Board = (props: Props) => {
 
 	return (
 		<div className=" border-black border-2 ">
-			<div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
+			{/* <div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
 				<MessageBoard message={message} player={player} />
-			</div>
-			<div className="p-1 bg-cyan-400">
+			</div> */}
+			<div className="">
 				{board.map((value: TboardData[], i) => {
 					return (
-						<div className="flex mt-1">
+						<div className="grid grid-cols-10 gap-0">
 							{value.map((data: TboardData, j) => {
 								return (
 									<div
-										className="m-1 w-[35px] h-[35px] hover:cursor-crosshair bg-white border border-black"
+										className="w-[35px] h-[35px] hover:cursor-crosshair bg-blue-300 border"
 										onClick={() => {
 											shot(i, j);
 										}}>

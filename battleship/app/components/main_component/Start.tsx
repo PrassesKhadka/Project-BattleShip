@@ -15,26 +15,26 @@ interface Props {
 const Start = ({ player, board }: Props) => {
 	// Just to cause the rerenders
 	const [state, setState] = useState<boolean>(false);
+	const shipsRef = useRef<IreturnShipDrag>(ShipDrag(player));
+	const ships = shipsRef.current;
 
-	// Creating 5 ships
-	const ships: IreturnShipDrag = ShipDrag(player);
 	const draggedItem = useRef<IreturnShip | undefined>();
 	const dragIndex = useRef<number>(0);
 
 	function handleDragStart(e: React.DragEvent, aship: IreturnShip[]) {
 		// if length=2 then [ship,ship]
 		draggedItem.current = aship[0];
-		console.log(draggedItem);
-		console.log(dragIndex);
 	}
 
 	function allowDrop(e: React.DragEvent) {
 		e.stopPropagation();
 		e.preventDefault();
 	}
+
 	function handleOnDragLeave(e: React.DragEvent, location: Ilocation) {
 		e.preventDefault();
-		console.log(location.x, location.y);
+
+		// console.log(location.x, location.y);
 		const onDragLeaveLocation = location;
 		if (typeof draggedItem.current === "object") {
 			const result = ships.placeValid(
@@ -42,8 +42,9 @@ const Start = ({ player, board }: Props) => {
 				dragIndex.current,
 				onDragLeaveLocation
 			);
-			setState((prev) => !prev);
-			// console.log(player.getGameBoard().board);
+			if (result) {
+				setState((prev) => !prev);
+			}
 		}
 	}
 
@@ -68,16 +69,20 @@ const Start = ({ player, board }: Props) => {
 			</div>
 
 			{/* Ships */}
-			<div>
-				{ships.ships.map((aship: IreturnShip[]) => (
-					<div draggable onDragStart={(e) => handleDragStart(e, aship)}>
-						{aship.map((ship: IreturnShip, i) => (
-							<div
-								onMouseEnter={() => (dragIndex.current = i)}
-								className="p-4 border bg-black inline-block"></div>
-						))}
-					</div>
-				))}
+			<div className="w-full h-[200px] border">
+				{ships.getShips().length > 0 ? (
+					ships.getShips().map((aship: IreturnShip[]) => (
+						<div draggable onDragStart={(e) => handleDragStart(e, aship)}>
+							{aship.map((ship: IreturnShip, i) => (
+								<div
+									onMouseEnter={() => (dragIndex.current = i)}
+									className="p-4 border bg-black inline-block"></div>
+							))}
+						</div>
+					))
+				) : (
+					<div className=""></div>
+				)}
 			</div>
 		</div>
 	);
