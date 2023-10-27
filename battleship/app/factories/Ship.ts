@@ -6,16 +6,22 @@ export interface IreturnShip {
 	getHits: () => number;
 	hit: () => boolean;
 	isSunk: () => boolean;
+	isToggleDirection: () => void;
 }
 
 function Ship(length: number, isHorizontal: boolean): IreturnShip {
 	let hits = 0;
+	length = length;
+	isHorizontal = isHorizontal;
 
 	const getLength = (): number => {
 		return length;
 	};
 	const getIsHorizontal = (): boolean => {
 		return isHorizontal;
+	};
+	const isToggleDirection = (): void => {
+		isHorizontal = !isHorizontal;
 	};
 	const getHits = (): number => {
 		return hits;
@@ -33,7 +39,14 @@ function Ship(length: number, isHorizontal: boolean): IreturnShip {
 		}
 	};
 
-	return { getLength, getIsHorizontal, getHits, hit, isSunk };
+	return {
+		getLength,
+		getIsHorizontal,
+		getHits,
+		hit,
+		isSunk,
+		isToggleDirection,
+	};
 }
 
 export default Ship;

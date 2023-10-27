@@ -14,4 +14,11 @@ describe("Ship factory function", () => {
 		expect(ship.isSunk()).toBe(true);
 		expect(ship.getHits()).toBe(3);
 	});
+
+	it("test isToggleDirection function", () => {
+		const ship = Ship(3, true);
+		expect(ship.getIsHorizontal()).toBe(true);
+		ship.isToggleDirection();
+		expect(ship.getIsHorizontal()).toBe(false);
+	});
 });
