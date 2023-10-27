@@ -2,7 +2,7 @@
 import Gameboard, { Ilocation } from "./Gameboard";
 import Ship, { IreturnShip } from "./Ship";
 import { IreturnGameBoard } from "./Gameboard";
-
+  
 export interface IreturnPlayer {
 	getName: () => string;
 	getGameBoard: () => IreturnGameBoard;
