@@ -46,7 +46,7 @@ const Start = ({ player, board, setStart }: Props) => {
 			if (result) {
 				setState((prev) => !prev);
 			}
-			console.log(player.getIsTurn());
+			// console.log(player.getIsTurn());
 		}
 	}
 
@@ -78,14 +78,17 @@ const Start = ({ player, board, setStart }: Props) => {
 							{aship.map((ship: IreturnShip, i) => (
 								<div
 									onMouseEnter={() => (dragIndex.current = i)}
-									className="p-4 border bg-black inline-block"></div>
+									className="p-4 border bg-white border-green-300 inline-block"></div>
 							))}
 						</div>
 					))
 				) : (
 					<div className="flex justify-center items-center">
 						<button
-							onClick={() => setStart(true)}
+							onClick={() => {
+								setStart(true);
+								player.toggleIsTurn();
+							}}
 							className="inline-block hover:cursor-pointer hover:bg-green-600 p-2 bg-green-500 mt-[20%] rounded-md text-white">
 							Start
 						</button>
