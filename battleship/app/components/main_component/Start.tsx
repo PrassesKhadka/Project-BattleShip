@@ -1,7 +1,7 @@
 "use client";
 import { IreturnPlayer } from "@/app/factories/Player";
 import { Ilocation, TboardData } from "@/app/factories/Gameboard";
-import React, { useEffect, useRef } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Ship, { IreturnShip } from "@/app/factories/Ship";
 import Aship from "./Ship";
 import { useState } from "react";
@@ -11,8 +11,9 @@ import { IreturnShipDrag } from "@/app/factories/DragNDrop";
 interface Props {
 	player: IreturnPlayer;
 	board: TboardData[][];
+	setStart: Dispatch<SetStateAction<boolean>>;
 }
-const Start = ({ player, board }: Props) => {
+const Start = ({ player, board, setStart }: Props) => {
 	// Just to cause the rerenders
 	const [state, setState] = useState<boolean>(false);
 	const shipsRef = useRef<IreturnShipDrag>(ShipDrag(player));
@@ -36,7 +37,7 @@ const Start = ({ player, board }: Props) => {
 
 		// console.log(location.x, location.y);
 		const onDragLeaveLocation = location;
-		if (typeof draggedItem.current === "object") {
+		if (draggedItem?.current) {
 			const result = ships.placeValid(
 				draggedItem.current,
 				dragIndex.current,
@@ -45,6 +46,7 @@ const Start = ({ player, board }: Props) => {
 			if (result) {
 				setState((prev) => !prev);
 			}
+			console.log(player.getIsTurn());
 		}
 	}
 
@@ -81,7 +83,13 @@ const Start = ({ player, board }: Props) => {
 						</div>
 					))
 				) : (
-					<div className=""></div>
+					<div className="flex justify-center items-center">
+						<button
+							onClick={() => setStart(true)}
+							className="inline-block hover:cursor-pointer hover:bg-green-600 p-2 bg-green-500 mt-[20%] rounded-md text-white">
+							Start
+						</button>
+					</div>
 				)}
 			</div>
 		</div>

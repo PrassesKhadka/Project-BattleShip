@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useState } from "react";
 import {
 	Ilocation,
@@ -16,6 +16,8 @@ interface Props {
 
 const Board = (props: Props) => {
 	const { board, player, opponent } = props;
+	console.log(player);
+	console.log(player.getIsTurn());
 	const [message, setMessage] = useState<string>("");
 	const [hitIndex, setHitIndex] = useState<Ilocation[]>([]);
 	const [missIndex, setMissIndex] = useState<Ilocation[]>([]);
@@ -38,7 +40,7 @@ const Board = (props: Props) => {
 				} else {
 					setMissIndex((prev) => [...prev, { x: i, y: j }]);
 				}
-				console.log(message);
+				// console.log(message);
 				setMessage((prev) => (prev = `Computer, ${result.value}`));
 				console.log(message);
 			}
@@ -56,14 +58,15 @@ const Board = (props: Props) => {
 			//after every attack, player turn toggles
 			const message = opponent.attack(player, { x: i, y: j });
 			setMessage(message);
+			console.log(opponent.getGameBoard().board);
 		}
 	}
 
 	return (
 		<div className=" border-black border-2 ">
-			{/* <div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
+			<div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
 				<MessageBoard message={message} player={player} />
-			</div> */}
+			</div>
 			<div className="">
 				{board.map((value: TboardData[], i) => {
 					return (

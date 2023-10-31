@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Player from "../factories/Player";
+import React, { useEffect, useRef, useState } from "react";
+import Player, { IreturnPlayer } from "../factories/Player";
 import Board from "./main_component/Board";
 import Start from "./main_component/Start";
 import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
@@ -11,12 +11,12 @@ const Main = () => {
 	let board2: TboardData[][] = [];
 
 	// For player1
-	const player1 = Player("Prasses");
-	const player1Gameboard = player1.getGameBoard();
+	const player1 = useRef(Player("Prasses"));
+	const player1Gameboard = player1.current.getGameBoard();
 	board1 = player1Gameboard.board;
 	// player1.randomlyAddShip();
 	// setting player1's turn first
-	// player1.toggleIsTurn();
+	player1.current.toggleIsTurn();
 
 	// For player2
 	const player2 = Player("Computer");
@@ -27,11 +27,11 @@ const Main = () => {
 	return (
 		<div className=" bg-[#5E5E5E] w-screen min-h-screen flex justify-center items-center">
 			{!start ? (
-				<Start player={player1} board={board1} />
+				<Start player={player1.current} board={board1} setStart={setStart} />
 			) : (
 				<div className="flex flex-wrap justify-center items-center gap-12">
-					<Board board={board1} player={player1} opponent={player2} />
-					<Board board={board2} player={player2} opponent={player1} />
+					<Board board={board1} player={player1.current} opponent={player2} />
+					<Board board={board2} player={player2} opponent={player1.current} />
 				</div>
 			)}
 		</div>
