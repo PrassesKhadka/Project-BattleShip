@@ -16,7 +16,7 @@ const Main = () => {
 	board1 = player1Gameboard.board;
 	// player1.randomlyAddShip();
 	// setting player1's turn first
-	player1.current.toggleIsTurn();
+	// player1.current.toggleIsTurn();
 
 	// For player2
 	const player2 = Player("Computer");
@@ -25,7 +25,7 @@ const Main = () => {
 	player2.randomlyAddShip();
 
 	return (
-		<div className=" bg-[#5E5E5E] w-screen min-h-screen flex justify-center items-center">
+		<div className="bg-white w-screen min-h-screen flex justify-center items-center">
 			{!start ? (
 				<Start player={player1.current} board={board1} setStart={setStart} />
 			) : (

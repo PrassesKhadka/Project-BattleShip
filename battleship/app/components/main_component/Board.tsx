@@ -16,8 +16,8 @@ interface Props {
 
 const Board = (props: Props) => {
 	const { board, player, opponent } = props;
-	console.log(player);
-	console.log(player.getIsTurn());
+	// console.log(player);
+	// console.log(player.getIsTurn());
 	const [message, setMessage] = useState<string>("");
 	const [hitIndex, setHitIndex] = useState<Ilocation[]>([]);
 	const [missIndex, setMissIndex] = useState<Ilocation[]>([]);
@@ -28,7 +28,7 @@ const Board = (props: Props) => {
 		//Every second this useEffect will run
 		const intervalId = setInterval(() => {
 			setCount((prevCount) => !prevCount);
-		}, 1000);
+		}, 500);
 
 		if (opponent.getName() === "Computer" && opponent.getIsTurn() === true) {
 			const result = opponent.randomlyHitShip(player);
@@ -41,8 +41,9 @@ const Board = (props: Props) => {
 					setMissIndex((prev) => [...prev, { x: i, y: j }]);
 				}
 				// console.log(message);
+
 				setMessage((prev) => (prev = `Computer, ${result.value}`));
-				console.log(message);
+				// console.log(message);
 			}
 		}
 	}, [count]);
@@ -57,14 +58,15 @@ const Board = (props: Props) => {
 			}
 			//after every attack, player turn toggles
 			const message = opponent.attack(player, { x: i, y: j });
+
 			setMessage(message);
-			console.log(opponent.getGameBoard().board);
+			// console.log(opponent.getGameBoard().board);
 		}
 	}
 
 	return (
-		<div className=" border-black border-2 ">
-			<div className="bg-[#222222] font-semibold text-white p-4 text-l border-b-2 border-b-black ">
+		<div className=" border-slate-500 border-2">
+			<div className="bg-[#a7f3d0]  text-black p-4  border-b-black ">
 				<MessageBoard message={message} player={player} />
 			</div>
 			<div className="">
@@ -74,7 +76,7 @@ const Board = (props: Props) => {
 							{value.map((data: TboardData, j) => {
 								return (
 									<div
-										className="w-[35px] h-[35px] hover:cursor-crosshair bg-blue-300 border"
+										className="w-[45px] h-[40px] hover:cursor-crosshair bg-blue-300 border"
 										onClick={() => {
 											shot(i, j);
 										}}>

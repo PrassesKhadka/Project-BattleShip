@@ -52,19 +52,19 @@ const Start = ({ player, board, setStart }: Props) => {
 
 	return (
 		<div className="flex flex-wrap flex-col items-center">
-			<div className="grid grid-cols-10 border mb-4">
+			<div className="grid grid-cols-10 border-2 border-blue-700 mb-4">
 				{board.map((value, i) =>
 					value.map((data, j) =>
 						data != 0 ? (
 							<div
 								onDragOver={(e) => allowDrop(e)}
 								onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-								className="p-4 border bg-black"></div>
+								className="p-4 border border-blue-500 bg-blue-100 "></div>
 						) : (
 							<div
 								onDragOver={(e) => allowDrop(e)}
 								onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-								className="p-4 border"></div>
+								className="p-4 border  border-slate-300"></div>
 						)
 					)
 				)}
@@ -78,7 +78,7 @@ const Start = ({ player, board, setStart }: Props) => {
 							{aship.map((ship: IreturnShip, i) => (
 								<div
 									onMouseEnter={() => (dragIndex.current = i)}
-									className="p-4 border bg-white border-green-300 inline-block"></div>
+									className="p-4 border border-blue-500 bg-blue-100 inline-block hover:cursor-grab hover:bg-blue-200"></div>
 							))}
 						</div>
 					))
