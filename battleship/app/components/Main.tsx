@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Player, { IreturnPlayer } from "../factories/Player";
 import Board from "./main_component/Board";
+import Sidebar from "./other_component/Sidebar";
 import Start from "./main_component/Start";
 import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
 
@@ -25,7 +26,13 @@ const Main = () => {
 	player2.randomlyAddShip();
 
 	return (
-		<div className="bg-white w-screen min-h-screen flex justify-center items-center">
+		<div className="relative bg-white w-screen min-h-screen flex justify-center items-center">
+			{!start ? (
+				<div className="absolute left-0 w-[30%] h-screen overflow-y-scroll rounded-sm bg-gradient-to-r from-rose-400 to-red-500">
+					<Sidebar />
+				</div>
+			) : null}
+
 			{!start ? (
 				<Start player={player1.current} board={board1} setStart={setStart} />
 			) : (

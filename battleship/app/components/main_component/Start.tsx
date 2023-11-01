@@ -71,14 +71,17 @@ const Start = ({ player, board, setStart }: Props) => {
 			</div>
 
 			{/* Ships */}
-			<div className="w-full h-[200px] border">
+			<div className="w-full h-[200px]">
 				{ships.getShips().length > 0 ? (
 					ships.getShips().map((aship: IreturnShip[]) => (
-						<div draggable onDragStart={(e) => handleDragStart(e, aship)}>
+						<div
+							draggable
+							onDragStart={(e) => handleDragStart(e, aship)}
+							className="">
 							{aship.map((ship: IreturnShip, i) => (
 								<div
 									onMouseEnter={() => (dragIndex.current = i)}
-									className="p-4 border border-blue-500 bg-blue-100 inline-block hover:cursor-grab hover:bg-blue-200"></div>
+									className="inline-block p-4 border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200"></div>
 							))}
 						</div>
 					))
@@ -89,7 +92,7 @@ const Start = ({ player, board, setStart }: Props) => {
 								setStart(true);
 								player.toggleIsTurn();
 							}}
-							className="inline-block hover:cursor-pointer hover:bg-green-600 p-2 bg-green-500 mt-[20%] rounded-md text-white">
+							className="inline-block hover:cursor-pointer hover:bg-green-600 p-4 text-2xl bg-green-500 mt-[20%] rounded-xl text-white">
 							Start
 						</button>
 					</div>
