@@ -52,9 +52,9 @@ const Start = ({ player, board, setStart }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-wrap flex-col items-center">
+		<div className="flex flex-wrap justify-end min-h-screen w-screen items-center">
 			{/* player's board to drag and drop to place the ship */}
-			<div className="grid grid-cols-10 border-2 border-blue-700 mb-4">
+			<div className=" grid grid-cols-10 border-2 border-blue-700 m-5 ">
 				{board.map((value, i) =>
 					value.map((data, j) =>
 						data != 0 ? (
@@ -73,7 +73,7 @@ const Start = ({ player, board, setStart }: Props) => {
 			</div>
 
 			{/* Ships */}
-			<div className=" h-[200px]">
+			<div className=" h-[200px] m-12">
 				{ships.getShips().length > 0 ? (
 					ships.getShips().map((aship: IreturnShip[]) => (
 						<div
