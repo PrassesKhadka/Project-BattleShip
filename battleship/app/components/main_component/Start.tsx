@@ -18,6 +18,7 @@ const Start = ({ player, board, setStart }: Props) => {
 	const [state, setState] = useState<boolean>(false);
 	const shipsRef = useRef<IreturnShipDrag>(ShipDrag(player));
 	const ships = shipsRef.current;
+	const [horizontal, setHorizontal] = useState<boolean>(true);
 
 	const draggedItem = useRef<IreturnShip | undefined>();
 	const dragIndex = useRef<number>(0);
@@ -52,6 +53,7 @@ const Start = ({ player, board, setStart }: Props) => {
 
 	return (
 		<div className="flex flex-wrap flex-col items-center">
+			{/* player's board to drag and drop to place the ship */}
 			<div className="grid grid-cols-10 border-2 border-blue-700 mb-4">
 				{board.map((value, i) =>
 					value.map((data, j) =>
@@ -71,17 +73,23 @@ const Start = ({ player, board, setStart }: Props) => {
 			</div>
 
 			{/* Ships */}
-			<div className="w-full h-[200px]">
+			<div className=" h-[200px]">
 				{ships.getShips().length > 0 ? (
 					ships.getShips().map((aship: IreturnShip[]) => (
 						<div
 							draggable
 							onDragStart={(e) => handleDragStart(e, aship)}
-							className="">
+							className="mb-1">
 							{aship.map((ship: IreturnShip, i) => (
 								<div
 									onMouseEnter={() => (dragIndex.current = i)}
-									className="inline-block p-4 border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200"></div>
+									onClick={() => {
+										aship[i].isToggleDirection();
+										setHorizontal((prev) => !prev);
+									}}
+									className={`inline-block p-4 w-[30px]  border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200 ${
+										!aship[i].getIsHorizontal() ? "flex" : ""
+									}`}></div>
 							))}
 						</div>
 					))
