@@ -20,6 +20,7 @@ export interface IreturnGameBoard {
 	occupiedIndex: Ilocation[];
 	placeShip: (ship: IreturnShip, location: Ilocation) => boolean;
 	receiveAttack: (location: Ilocation) => string;
+	allShipSunk: () => boolean;
 	reset: () => boolean;
 }
 
@@ -181,6 +182,7 @@ export default function Gameboard(): IreturnGameBoard {
 		occupiedIndex,
 		placeShip,
 		receiveAttack,
+		allShipSunk,
 		reset,
 	};
 }

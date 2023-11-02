@@ -7,6 +7,7 @@ import {
 } from "../../factories/Gameboard";
 import { IreturnPlayer } from "../../factories/Player";
 import MessageBoard from "./MessageBoard";
+import GameOver from "../other_component/GameOver";
 
 interface Props {
 	board: TboardData[][];
@@ -65,10 +66,17 @@ const Board = (props: Props) => {
 	}
 
 	return (
-		<div className=" border-slate-500 border-2">
+		<div className="border-slate-500 border-2">
+			{/* GameOver */}
+			{/* player gameboard allSunk then opponent wins */}
+			{true ? <GameOver winner={opponent.getName()} /> : null}
+
+			{/* Message Board */}
 			<div className="bg-[#a7f3d0]  text-black p-4  border-b-black ">
 				<MessageBoard message={message} player={player} />
 			</div>
+
+			{/* GameBoard */}
 			<div className="">
 				{board.map((value: TboardData[], i) => {
 					return (
