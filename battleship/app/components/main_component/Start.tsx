@@ -19,6 +19,15 @@ const Start = ({ player, board, setStart }: Props) => {
 	const shipsRef = useRef<IreturnShipDrag>(ShipDrag(player));
 	const ships = shipsRef.current;
 
+<<<<<<< HEAD
+=======
+	// Creating ships on first render
+	useState(() => {
+		//creating ships
+		ships.createShips();
+	}, []);
+
+>>>>>>> 1a8c92c7f74137f07d87a3ba61ed75fc56c6d3ba
 	const [horizontal, setHorizontal] = useState<boolean>(true);
 
 	const draggedItem = useRef<IreturnShip | undefined>();
@@ -97,15 +106,26 @@ const Start = ({ player, board, setStart }: Props) => {
 				</div>
 
 				{/* button */}
+<<<<<<< HEAD
 				<div className="flex justify-evenly p-1 text-white">
 					<button
 						onClick={() => handleRandomClick()}
 						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+=======
+				<div className="flex justify-evenly p-1">
+					<button
+						onClick={() => handleRandomClick()}
+						className="bg-blue-400 hover:bg-blue-500 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+>>>>>>> 1a8c92c7f74137f07d87a3ba61ed75fc56c6d3ba
 						random
 					</button>
 					<button
 						onClick={() => handleResetClick()}
+<<<<<<< HEAD
 						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+=======
+						className="bg-blue-400 hover:bg-blue-500 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+>>>>>>> 1a8c92c7f74137f07d87a3ba61ed75fc56c6d3ba
 						reset
 					</button>
 				</div>
