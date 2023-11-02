@@ -9,6 +9,7 @@ describe("DragNDrop", () => {
 
 	beforeEach(() => {
 		arrayShips = ShipDrag(player);
+		arrayShips.createShips();
 	});
 
 	it("Creates getShips()", () => {
@@ -47,5 +48,12 @@ describe("DragNDrop", () => {
 		// expect(arrayShips2.getShips().length).toBe(4);
 		// const result2 = arrayShips2.placeValid(shipDragged1, 0, { x: 5, y: 6 });
 		// expect(arrayShips2.getShips().length).toBe(3);
+	});
+
+	it("removes all ships ", () => {
+		expect(arrayShips.removeAllShips()).toBe(true);
+		expect(arrayShips.getShips()).toStrictEqual([]);
+		arrayShips.createShips();
+		// console.log(arrayShips.getShips());
 	});
 });

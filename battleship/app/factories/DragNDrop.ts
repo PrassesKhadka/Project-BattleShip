@@ -2,6 +2,9 @@ import { Ilocation } from "./Gameboard";
 import { IreturnPlayer } from "./Player";
 import Ship, { IreturnShip } from "./Ship";
 
+// This factory function is for the ships on the side(the one we drag and drop)
+// and when we drag and drop that ship, how does it affect the player's gameboard
+
 export interface IreturnShipDrag {
 	createShips: () => void;
 	getShips: () => IreturnShip[][];
@@ -10,12 +13,12 @@ export interface IreturnShipDrag {
 		offset: number,
 		onDragLocation: Ilocation
 	) => boolean;
+	removeAllShips: () => boolean;
 }
 
 export default function ShipDrag(player: IreturnPlayer): IreturnShipDrag {
 	let length = 2;
 	const ships: IreturnShip[][] = [];
-	createShips();
 	function createShips() {
 		// 5 ships created
 		for (let i = 0; i < 5; i++) {
@@ -30,6 +33,10 @@ export default function ShipDrag(player: IreturnPlayer): IreturnShipDrag {
 		}
 	}
 
+	function removeAllShips(): boolean {
+		ships.length = 0;
+		return true;
+	}
 	function getShips(): IreturnShip[][] {
 		return ships;
 	}
@@ -78,5 +85,6 @@ export default function ShipDrag(player: IreturnPlayer): IreturnShipDrag {
 		// console.log(startingPosition);
 		return startingPosition;
 	}
-	return { createShips, getShips, placeValid };
+
+	return { createShips, getShips, placeValid, removeAllShips };
 }
