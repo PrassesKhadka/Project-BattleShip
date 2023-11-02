@@ -54,4 +54,11 @@ describe("Player factory", () => {
 			}
 		}
 	});
+
+	it("Reset game", () => {
+		expect(player1.playAgain()).toBe(true);
+		// console.log(player1.getName());
+		// console.log(player1.getGameBoard());
+		// console.log(player1.getIsTurn());
+	});
 });

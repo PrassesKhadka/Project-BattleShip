@@ -2,7 +2,7 @@
 import Gameboard, { Ilocation } from "./Gameboard";
 import Ship, { IreturnShip } from "./Ship";
 import { IreturnGameBoard } from "./Gameboard";
-  
+
 export interface IreturnPlayer {
 	getName: () => string;
 	getGameBoard: () => IreturnGameBoard;
@@ -13,6 +13,7 @@ export interface IreturnPlayer {
 	randomlyHitShip: (
 		opponent: IreturnPlayer
 	) => { randomLocation: Ilocation; value: string } | boolean;
+	playAgain: () => boolean;
 }
 
 export default function Player(name: string) {
@@ -105,6 +106,13 @@ export default function Player(name: string) {
 		return location;
 	}
 
+	function playAgain(): boolean {
+		gameboard.reset();
+		Ships.length = 0;
+		isTurn = false;
+		return true;
+	}
+
 	return {
 		getName,
 		getGameBoard,
@@ -113,5 +121,6 @@ export default function Player(name: string) {
 		getIsTurn,
 		toggleIsTurn,
 		randomlyHitShip,
+		playAgain,
 	};
 }
