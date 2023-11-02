@@ -20,6 +20,7 @@ export interface IreturnGameBoard {
 	occupiedIndex: Ilocation[];
 	placeShip: (ship: IreturnShip, location: Ilocation) => boolean;
 	receiveAttack: (location: Ilocation) => string;
+	reset: () => boolean;
 }
 
 // #The main factory function Gameboard
@@ -167,6 +168,12 @@ export default function Gameboard(): IreturnGameBoard {
 		return true;
 	}
 
+	//Function to reset the gameboard
+	function reset(): boolean {
+		board.map((array) => array.fill(0));
+		return true;
+	}
+
 	return {
 		board,
 		hitIndex,
@@ -174,5 +181,6 @@ export default function Gameboard(): IreturnGameBoard {
 		occupiedIndex,
 		placeShip,
 		receiveAttack,
+		reset,
 	};
 }

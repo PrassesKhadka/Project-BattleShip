@@ -1,6 +1,7 @@
 // Writing test cases for the gameboard factory function
 
 import Gameboard from "../Gameboard";
+import Player from "../Player";
 import Ship, { IreturnShip } from "../Ship";
 
 describe("Gameboard", () => {
@@ -18,6 +19,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => true,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 
 		expect(gameboard.placeShip(ship, { x: 1, y: 5 })).toBe(true);
@@ -31,6 +33,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => false,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 
 		expect(gameboard.placeShip(ship, { x: 0, y: 0 })).toBe(true);
@@ -44,6 +47,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => false,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 		const ship2: IreturnShip = {
 			getLength: () => 5,
@@ -51,6 +55,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => false,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 		gameboard.placeShip(ship1, { x: 0, y: 0 });
 		expect(gameboard.placeShip(ship2, { x: 0, y: 0 })).toBe(false);
@@ -65,6 +70,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => true,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 		// vertical ship
 		const ship2: IreturnShip = {
@@ -73,6 +79,7 @@ describe("Gameboard", () => {
 			isSunk: () => false,
 			getIsHorizontal: () => false,
 			getHits: () => 0,
+			isToggleDirection: () => false,
 		};
 
 		// checking for horizontal ship
@@ -91,6 +98,7 @@ describe("Gameboard", () => {
 				isSunk: () => false,
 				getIsHorizontal: () => true,
 				getHits: () => 0,
+				isToggleDirection: () => false,
 			};
 			gameboard.placeShip(ship1, { x: 4, y: 4 });
 			expect(gameboard.receiveAttack({ x: 4, y: 4 })).toBe(
@@ -123,6 +131,7 @@ describe("Gameboard", () => {
 				isSunk: () => false,
 				getIsHorizontal: () => true,
 				getHits: () => 0,
+				isToggleDirection: () => false,
 			};
 			gameboard.placeShip(ship1, { x: 4, y: 4 });
 			gameboard.receiveAttack({ x: 4, y: 4 });
@@ -162,6 +171,15 @@ describe("Gameboard", () => {
 			// gameboard.receiveAttack({ x: 4, y: 5 });
 			// gameboard.receiveAttack({ x: 4, y: 6 });
 			// expect(gameboard.receiveAttack({ x: 4, y: 7 })).toBe("All ships sunk");
+		});
+
+		it("should reset the gameboard and return true", () => {
+			const player = Player("prasses");
+			player.randomlyAddShip();
+			const gameBoard = player.getGameBoard();
+			// console.log(gameBoard.board);
+			expect(gameBoard.reset()).toBe(true);
+			// console.log(gameBoard.board);
 		});
 	});
 });
