@@ -27,11 +27,11 @@ const Main = () => {
 
 	return (
 		<div className="relative bg-white w-screen min-h-screen flex justify-center items-center">
-			{!start ? (
+			{/* {!start ? (
 				<div className="fixed bg-red-300 left-0 w-[30%] min-h-screen overflow-y-scroll rounded-sm bg-gradient-to-r from-rose-400 to-red-500">
 					<Sidebar />
 				</div>
-			) : null}
+			) : null} */}
 
 			{!start ? (
 				<Start player={player1.current} board={board1} setStart={setStart} />

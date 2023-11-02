@@ -18,6 +18,7 @@ const Start = ({ player, board, setStart }: Props) => {
 	const [state, setState] = useState<boolean>(false);
 	const shipsRef = useRef<IreturnShipDrag>(ShipDrag(player));
 	const ships = shipsRef.current;
+
 	const [horizontal, setHorizontal] = useState<boolean>(true);
 
 	const draggedItem = useRef<IreturnShip | undefined>();
@@ -51,35 +52,73 @@ const Start = ({ player, board, setStart }: Props) => {
 		}
 	}
 
+	function handleRandomClick() {
+		// first clear the gameboard and then randomlyAddShip
+		player.getGameBoard().reset();
+		player.randomlyAddShip();
+		// to remove the ships on the side
+		ships.getShips().length = 0;
+		// To make this component rerender again
+		setState((prev) => !prev);
+	}
+
+	function handleResetClick() {
+		// first remove all the ships and then createShips
+		ships.removeAllShips();
+		// reset the gameboard
+		player.getGameBoard().reset();
+		// and make the ships on the side available
+		ships.createShips();
+		// make this component rerender again
+		setState((prev) => !prev);
+	}
+
 	return (
-		<div className="flex flex-wrap justify-end min-h-screen w-screen items-center">
+		<div className="flex flex-wrap justify-center min-h-screen w-screen items-center">
 			{/* player's board to drag and drop to place the ship */}
-			<div className=" grid grid-cols-10 border-2 border-blue-700 m-5 ">
-				{board.map((value, i) =>
-					value.map((data, j) =>
-						data != 0 ? (
-							<div
-								onDragOver={(e) => allowDrop(e)}
-								onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-								className="p-4 border border-blue-500 bg-blue-100 "></div>
-						) : (
-							<div
-								onDragOver={(e) => allowDrop(e)}
-								onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-								className="p-4 border  border-slate-300"></div>
+			<div className="flex flex-col ">
+				{/* board */}
+				<div className=" grid grid-cols-10 border-2 border-blue-700 m-5 ">
+					{board.map((value, i) =>
+						value.map((data, j) =>
+							data != 0 ? (
+								<div
+									onDragOver={(e) => allowDrop(e)}
+									onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
+									className="p-4 border border-blue-500 bg-blue-100 "></div>
+							) : (
+								<div
+									onDragOver={(e) => allowDrop(e)}
+									onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
+									className="p-4 border  border-slate-300"></div>
+							)
 						)
-					)
-				)}
+					)}
+				</div>
+
+				{/* button */}
+				<div className="flex justify-evenly p-1 text-white">
+					<button
+						onClick={() => handleRandomClick()}
+						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+						random
+					</button>
+					<button
+						onClick={() => handleResetClick()}
+						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
+						reset
+					</button>
+				</div>
 			</div>
 
 			{/* Ships */}
-			<div className=" h-[200px] m-12">
+			<div className=" h-[350px] w-[300px] flex flex-col items-center justify-center gap-2">
 				{ships.getShips().length > 0 ? (
 					ships.getShips().map((aship: IreturnShip[]) => (
 						<div
 							draggable
 							onDragStart={(e) => handleDragStart(e, aship)}
-							className="mb-1">
+							className="">
 							{aship.map((ship: IreturnShip, i) => (
 								<div
 									onMouseEnter={() => (dragIndex.current = i)}
@@ -100,7 +139,7 @@ const Start = ({ player, board, setStart }: Props) => {
 								setStart(true);
 								player.toggleIsTurn();
 							}}
-							className="inline-block hover:cursor-pointer hover:bg-green-600 p-4 text-2xl bg-green-500 mt-[20%] rounded-xl text-white">
+							className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
 							Start
 						</button>
 					</div>
