@@ -19,12 +19,9 @@ export interface IreturnShipDrag {
 export default function ShipDrag(player: IreturnPlayer): IreturnShipDrag {
 	const ships: IreturnShip[][] = [];
 
-<<<<<<< HEAD
 	// if written in comonent then after every render ships will be created
 	createShips();
 
-=======
->>>>>>> 1a8c92c7f74137f07d87a3ba61ed75fc56c6d3ba
 	function createShips() {
 		let length = 2;
 		// 5 ships created

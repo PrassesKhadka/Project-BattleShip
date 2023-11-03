@@ -37,8 +37,18 @@ const Main = () => {
 				<Start player={player1.current} board={board1} setStart={setStart} />
 			) : (
 				<div className="flex flex-wrap justify-center items-center gap-12">
-					<Board board={board1} player={player1.current} opponent={player2} />
-					<Board board={board2} player={player2} opponent={player1.current} />
+					<Board
+						board={board1}
+						player={player1.current}
+						opponent={player2}
+						setStart={setStart}
+					/>
+					<Board
+						board={board2}
+						player={player2}
+						opponent={player1.current}
+						setStart={setStart}
+					/>
 				</div>
 			)}
 		</div>

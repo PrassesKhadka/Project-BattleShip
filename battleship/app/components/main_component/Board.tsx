@@ -13,10 +13,11 @@ interface Props {
 	board: TboardData[][];
 	player: IreturnPlayer;
 	opponent: IreturnPlayer;
+	setStart: Dispatch<SetStateAction<boolean>>;
 }
 
 const Board = (props: Props) => {
-	const { board, player, opponent } = props;
+	const { board, player, opponent, setStart } = props;
 	// console.log(player);
 	// console.log(player.getIsTurn());
 	const [message, setMessage] = useState<string>("");
@@ -69,7 +70,14 @@ const Board = (props: Props) => {
 		<div className="border-slate-500 border-2">
 			{/* GameOver */}
 			{/* player gameboard allSunk then opponent wins */}
-			{true ? <GameOver winner={opponent.getName()} /> : null}
+			{true ? (
+				<GameOver
+					player={player}
+					opponent={opponent}
+					setStart={setStart}
+					winner={opponent.getName()}
+				/>
+			) : null}
 
 			{/* Message Board */}
 			<div className="bg-[#a7f3d0]  text-black p-4  border-b-black ">
