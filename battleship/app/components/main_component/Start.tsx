@@ -8,6 +8,29 @@ import { useState } from "react";
 import ShipDrag from "@/app/factories/DragNDrop";
 import { IreturnShipDrag } from "@/app/factories/DragNDrop";
 
+// for dynamic colors in tailwind: we just have to declare this that's it !!!
+const dynamicBg = [
+	"bg-red-100",
+	"bg-blue-100",
+	"bg-green-100",
+	"bg-orange-100",
+	"bg-pink-100",
+];
+const dynamicHover = [
+	"bg-red-200",
+	"bg-blue-200",
+	"bg-green-200",
+	"bg-orange-200",
+	"bg-pink-200",
+];
+const dynamicBorder = [
+	"border-red-500",
+	"border-blue-500",
+	"border-green-500",
+	"border-orange-500",
+	"border-pink-500",
+];
+
 interface Props {
 	player: IreturnPlayer;
 	board: TboardData[][];
@@ -74,14 +97,14 @@ const Start = ({ player, board, setStart }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-col justify-evenly ml-[25%] mr-[25%] mt-8">
+		<div className="flex flex-col justify-evenly ml-[5%] mr-[5%] mt-8">
 			{/* header div */}
 			<header>
 				<h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black text-center">{`${player.getName()}, place your ships.You can click on the ships to toggle directions`}</h1>
 			</header>
 
 			{/* Main div */}
-			<div className="flex flex-wrap justify-center items-center">
+			<div className="flex flex-wrap justify-center items-center ">
 				{/* player's board to drag and drop to place the ship */}
 				<div className="flex flex-col ">
 					{/* board */}
@@ -93,7 +116,7 @@ const Start = ({ player, board, setStart }: Props) => {
 										key={j}
 										onDragOver={(e) => allowDrop(e)}
 										onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-										className="p-4 border border-blue-500 bg-blue-100 "></div>
+										className={`p-4 border border-${data.getColor()}-500 bg-${data.getColor()}-100`}></div>
 								) : (
 									<div
 										key={j}
@@ -137,7 +160,7 @@ const Start = ({ player, board, setStart }: Props) => {
 											aship[i].isToggleDirection();
 											setHorizontal((prev) => !prev);
 										}}
-										className={`inline-block p-4 w-[30px]  border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200 ${
+										className={`inline-block p-4 w-[30px]  border border-${ship.getColor()}-500 bg-${ship.getColor()}-100  hover:cursor-grab hover:bg-${ship.getColor()}-200 ${
 											!aship[i].getIsHorizontal() ? "flex" : ""
 										}`}></div>
 								))}

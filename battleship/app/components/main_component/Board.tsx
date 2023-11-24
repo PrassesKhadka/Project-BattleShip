@@ -9,6 +9,15 @@ import { IreturnPlayer } from "../../factories/Player";
 import MessageBoard from "./MessageBoard";
 import GameOver from "../other_component/GameOver";
 
+// for dynamic colors in tailwind: we just have to declare this that's it !!!
+const dynamicBg = [
+	"bg-red-500",
+	"bg-blue-500",
+	"bg-green-500",
+	"bg-orange-500",
+	"bg-pink-500",
+];
+
 interface Props {
 	board: TboardData[][];
 	player: IreturnPlayer;
@@ -27,7 +36,7 @@ const Board = (props: Props) => {
 	const [count, setCount] = useState<boolean>(false);
 
 	useEffect(() => {
-		//Every second this useEffect will run
+		//Every half second this useEffect will run
 		const intervalId = setInterval(() => {
 			setCount((prevCount) => !prevCount);
 		}, 500);
@@ -100,7 +109,10 @@ const Board = (props: Props) => {
 										{hitIndex.some((element) =>
 											element.x === i && element.y === j ? true : false
 										) ? (
-											<div className="w-full h-full hover:cursor-not-allowed text-center bg-purple-500">
+											<div
+												className={`w-full h-full hover:cursor-not-allowed text-center bg-${
+													typeof data === "object" && data.getColor()
+												}-500`}>
 												<span className="text-4xl text-white font-bold">X</span>
 											</div>
 										) : missIndex.some((element) =>

@@ -1,6 +1,6 @@
 import { Ilocation } from "./Gameboard";
 import { IreturnPlayer } from "./Player";
-import Ship, { IreturnShip } from "./Ship";
+import Ship, { IreturnShip, Tcolor } from "./Ship";
 
 // This factory function is for the ships on the side(the one we drag and drop)
 // and when we drag and drop that ship, how does it affect the player's gameboard
@@ -19,14 +19,16 @@ export interface IreturnShipDrag {
 export default function ShipDrag(player: IreturnPlayer): IreturnShipDrag {
 	const ships: IreturnShip[][] = [];
 
-	// if written in comonent then after every render ships will be created
+	// if written in component then after every render, ships will be created
 	createShips();
 
 	function createShips() {
 		let length = 2;
+		let colors: Tcolor[] = ["red", "green", "blue", "orange", "pink"];
+
 		// 5 ships created
 		for (let i = 0; i < 5; i++) {
-			const ship = Ship(length, true);
+			const ship = Ship(length, true, colors[i]);
 			const arrShip: IreturnShip[] = [];
 			for (let i = 0; i < ship.getLength(); i++) {
 				arrShip.push(ship);

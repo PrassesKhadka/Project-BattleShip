@@ -2,6 +2,7 @@
 
 export interface IreturnShip {
 	getLength: () => number;
+	getColor: () => Tcolor;
 	getIsHorizontal: () => boolean;
 	getHits: () => number;
 	hit: () => boolean;
@@ -9,13 +10,24 @@ export interface IreturnShip {
 	isToggleDirection: () => void;
 }
 
-function Ship(length: number, isHorizontal: boolean): IreturnShip {
+export type Tcolor = "red" | "green" | "blue" | "orange" | "pink";
+
+function Ship(
+	length: number,
+	isHorizontal: boolean,
+	color: Tcolor
+): IreturnShip {
+	// Private datas:
 	let hits = 0;
 	length = length;
+	color = color;
 	isHorizontal = isHorizontal;
 
 	const getLength = (): number => {
 		return length;
+	};
+	const getColor = (): Tcolor => {
+		return color;
 	};
 	const getIsHorizontal = (): boolean => {
 		return isHorizontal;
@@ -41,6 +53,7 @@ function Ship(length: number, isHorizontal: boolean): IreturnShip {
 
 	return {
 		getLength,
+		getColor,
 		getIsHorizontal,
 		getHits,
 		hit,

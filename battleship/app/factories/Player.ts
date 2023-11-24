@@ -2,6 +2,7 @@
 import Gameboard, { Ilocation } from "./Gameboard";
 import Ship, { IreturnShip } from "./Ship";
 import { IreturnGameBoard } from "./Gameboard";
+import { Tcolor } from "./Ship";
 
 export interface IreturnPlayer {
 	getName: () => string;
@@ -49,12 +50,14 @@ export default function Player(name: string) {
 	}
 	function randomlyAddShip(): boolean {
 		let length = 2;
+		let colors: Tcolor[] = ["red", "green", "blue", "orange", "pink"];
+
 		//To add 5 ships randomly in the gameboard array
 		for (let i = 0; i < 5; i++) {
 			let isHorizontal = getRandomBoolean();
 			let location = getRandomLocation();
 			let value: boolean = false;
-			const ship = Ship(length, isHorizontal);
+			const ship = Ship(length, isHorizontal, colors[i]);
 			// jaba samma false aaucha placeShip garna khojney,once true returned i.e ship placed out of this loop
 			while (!value) {
 				value = gameboard.placeShip(ship, location);
