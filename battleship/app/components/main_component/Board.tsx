@@ -67,7 +67,7 @@ const Board = (props: Props) => {
 	}
 
 	return (
-		<div className="border-slate-500 border-2">
+		<div className="border-black border-4">
 			{/* GameOver */}
 			{/* player gameboard allSunk then opponent wins */}
 			{player.getGameBoard().allShipSunk() ? (
@@ -80,7 +80,7 @@ const Board = (props: Props) => {
 			) : null}
 
 			{/* Message Board */}
-			<div className="bg-[#a7f3d0]  text-black p-4  border-b-black ">
+			<div className="bg-white border-black border-b-4 font-semibold text-black px-2 py-8 ">
 				<MessageBoard message={message} player={player} />
 			</div>
 
@@ -93,26 +93,22 @@ const Board = (props: Props) => {
 								return (
 									<div
 										key={j}
-										className="w-[45px] h-[40px] hover:cursor-crosshair bg-blue-300 border"
+										className="w-[45px] h-[40px] hover:cursor-crosshair bg-white border border-purple-400"
 										onClick={() => {
 											shot(i, j);
 										}}>
-										{hitIndex.some((element) => {
-											if (element.x === i && element.y === j) {
-												return true;
-											} else {
-												return false;
-											}
-										}) ? (
-											<div className="w-full h-full hover:cursor-not-allowed bg-slate-800"></div>
-										) : missIndex.some((element) => {
-												if (element.x === i && element.y === j) {
-													return true;
-												} else {
-													return false;
-												}
-										  }) ? (
-											<div className="w-full h-full hover:cursor-not-allowed bg-gradient-to-r from-cyan-200 to-cyan-400"></div>
+										{hitIndex.some((element) =>
+											element.x === i && element.y === j ? true : false
+										) ? (
+											<div className="w-full h-full hover:cursor-not-allowed text-center bg-purple-500">
+												<span className="text-4xl text-white font-bold">X</span>
+											</div>
+										) : missIndex.some((element) =>
+												element.x === i && element.y === j ? true : false
+										  ) ? (
+											<div className="w-full h-full hover:cursor-not-allowed flex justify-center items-center">
+												<div className="w-3 h-3 bg-black rounded-full"></div>
+											</div>
 										) : (
 											<div></div>
 										)}

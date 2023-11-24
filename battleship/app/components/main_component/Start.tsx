@@ -77,7 +77,7 @@ const Start = ({ player, board, setStart }: Props) => {
 		<div className="flex flex-col justify-evenly ml-[25%] mr-[25%] mt-8">
 			{/* header div */}
 			<header>
-				<h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black text-center">{`${player.getName()}, place your ships.You can click on the ships to toggle directions`}</h1>
+				<h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black text-center">{`${player.getName()}, place your ships.You can click on the ships to toggle directions`}</h1>
 			</header>
 
 			{/* Main div */}
