@@ -10,7 +10,7 @@ const Sidebar = () => {
 				<h2 className="text-center text-xl font-bold">Rules</h2>
 				<ul className="text-left">
 					<li>
-						The objective of Battleship is to try and sink all of the opponent's
+						The objective of Battleship is to try and sink all of the opponents
 						ships before they sink all of yours. Players take turns firing shots
 						to attempt to hit the enemy ships.
 					</li>
@@ -22,7 +22,7 @@ const Sidebar = () => {
 						When a player hits a tile that holds a ship, they can replay until
 						they miss a shot.
 					</li>
-					<li>First player to sink all the opponent's ships wins the game!</li>
+					<li>First player to sink all the opponents ships wins the game!</li>
 				</ul>
 				<p></p>
 			</div>

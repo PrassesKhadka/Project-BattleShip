@@ -74,76 +74,88 @@ const Start = ({ player, board, setStart }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-wrap justify-center min-h-screen w-screen items-center">
-			{/* player's board to drag and drop to place the ship */}
-			<div className="flex flex-col ">
-				{/* board */}
-				<div className=" grid grid-cols-10 border-2 border-blue-700 m-5 ">
-					{board.map((value, i) =>
-						value.map((data, j) =>
-							data != 0 ? (
-								<div
-									onDragOver={(e) => allowDrop(e)}
-									onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-									className="p-4 border border-blue-500 bg-blue-100 "></div>
-							) : (
-								<div
-									onDragOver={(e) => allowDrop(e)}
-									onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
-									className="p-4 border  border-slate-300"></div>
+		<div className="flex flex-col justify-evenly ml-[25%] mr-[25%] mt-8">
+			{/* header div */}
+			<header>
+				<h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black text-center">{`${player.getName()}, place your ships.You can click on the ships to toggle directions`}</h1>
+			</header>
+
+			{/* Main div */}
+			<div className="flex flex-wrap justify-center items-center">
+				{/* player's board to drag and drop to place the ship */}
+				<div className="flex flex-col ">
+					{/* board */}
+					<div className=" grid grid-cols-10 border-2 border-blue-700 m-5 ">
+						{board.map((value, i) =>
+							value.map((data, j) =>
+								data != 0 ? (
+									<div
+										key={j}
+										onDragOver={(e) => allowDrop(e)}
+										onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
+										className="p-4 border border-blue-500 bg-blue-100 "></div>
+								) : (
+									<div
+										key={j}
+										onDragOver={(e) => allowDrop(e)}
+										onDrop={(e) => handleOnDragLeave(e, { x: i, y: j })}
+										className="p-4 border  border-slate-300"></div>
+								)
 							)
-						)
-					)}
-				</div>
+						)}
+					</div>
 
-				{/* button */}
-				<div className="flex justify-evenly p-1 text-white">
-					<button
-						onClick={() => handleRandomClick()}
-						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
-						random
-					</button>
-					<button
-						onClick={() => handleResetClick()}
-						className="bg-blue-500 hover:bg-blue-400 pr-4 pl-4 pt-1 pb-1 rounded-xl border">
-						reset
-					</button>
-				</div>
-			</div>
-
-			{/* Ships */}
-			<div className=" h-[350px] w-[300px] flex flex-col items-center justify-center gap-2">
-				{ships.getShips().length > 0 ? (
-					ships.getShips().map((aship: IreturnShip[]) => (
-						<div
-							draggable
-							onDragStart={(e) => handleDragStart(e, aship)}
-							className="">
-							{aship.map((ship: IreturnShip, i) => (
-								<div
-									onMouseEnter={() => (dragIndex.current = i)}
-									onClick={() => {
-										aship[i].isToggleDirection();
-										setHorizontal((prev) => !prev);
-									}}
-									className={`inline-block p-4 w-[30px]  border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200 ${
-										!aship[i].getIsHorizontal() ? "flex" : ""
-									}`}></div>
-							))}
-						</div>
-					))
-				) : (
-					<div className="flex justify-center items-center">
+					{/* button */}
+					<div className="flex justify-evenly p-1 text-white">
 						<button
-							onClick={() => {
-								setStart(true);
-								player.toggleIsTurn();
-							}}
-							className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-							Start
+							onClick={() => handleRandomClick()}
+							className="px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							Random
+						</button>
+						<button
+							onClick={() => handleResetClick()}
+							className="px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							Reset
 						</button>
 					</div>
-				)}
+				</div>
+
+				{/* Ships */}
+				<div className=" h-[350px] w-[300px] flex flex-col items-center justify-center gap-2">
+					{ships.getShips().length > 0 ? (
+						ships.getShips().map((aship: IreturnShip[], index) => (
+							<div
+								key={index}
+								draggable
+								onDragStart={(e) => handleDragStart(e, aship)}
+								className="">
+								{aship.map((ship: IreturnShip, i) => (
+									<div
+										key={i}
+										onMouseEnter={() => (dragIndex.current = i)}
+										onClick={() => {
+											aship[i].isToggleDirection();
+											setHorizontal((prev) => !prev);
+										}}
+										className={`inline-block p-4 w-[30px]  border border-blue-500 bg-blue-100  hover:cursor-grab hover:bg-blue-200 ${
+											!aship[i].getIsHorizontal() ? "flex" : ""
+										}`}></div>
+								))}
+							</div>
+						))
+					) : (
+						<div className="flex justify-center items-center">
+							<button
+								onClick={() => {
+									setStart(true);
+									player.toggleIsTurn();
+								}}
+								className="px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+								Start
+							</button>
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	);

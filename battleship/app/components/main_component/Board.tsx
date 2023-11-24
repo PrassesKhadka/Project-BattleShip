@@ -70,7 +70,7 @@ const Board = (props: Props) => {
 		<div className="border-slate-500 border-2">
 			{/* GameOver */}
 			{/* player gameboard allSunk then opponent wins */}
-			{true ? (
+			{player.getGameBoard().allShipSunk() ? (
 				<GameOver
 					player={player}
 					opponent={opponent}
@@ -88,10 +88,11 @@ const Board = (props: Props) => {
 			<div className="">
 				{board.map((value: TboardData[], i) => {
 					return (
-						<div className="grid grid-cols-10 gap-0">
+						<div key={i} className="grid grid-cols-10 gap-0">
 							{value.map((data: TboardData, j) => {
 								return (
 									<div
+										key={j}
 										className="w-[45px] h-[40px] hover:cursor-crosshair bg-blue-300 border"
 										onClick={() => {
 											shot(i, j);

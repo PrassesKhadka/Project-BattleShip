@@ -7,7 +7,6 @@ import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
 
 const Main = () => {
 	const [start, setStart] = useState<boolean>(false);
-
 	let board1: TboardData[][] = [];
 	let board2: TboardData[][] = [];
 

@@ -26,8 +26,10 @@ const Aship = ({ ship, length }: Props) => {
 				className="inline-block m-1 "
 				draggable
 				onClick={() => handleOnClick()}>
-				{aShip.map(() => (
-					<div className={`inline-block  p-4 border bg-black`}></div>
+				{aShip.map((value, index) => (
+					<div
+						key={index}
+						className={`inline-block  p-4 border bg-black`}></div>
 				))}
 			</div>
 		</section>
