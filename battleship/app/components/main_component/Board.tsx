@@ -8,7 +8,7 @@ import {
 import { IreturnPlayer } from "../../factories/Player";
 import MessageBoard from "./MessageBoard";
 import GameOver from "../other_component/GameOver";
-
+    
 // for dynamic colors in tailwind: we just have to declare this that's it !!!
 const dynamicBg = [
 	"bg-red-500",
@@ -76,7 +76,7 @@ const Board = (props: Props) => {
 	}
 
 	return (
-		<div className="border-black border-4">
+		<div>
 			{/* GameOver */}
 			{/* player gameboard allSunk then opponent wins */}
 			{player.getGameBoard().allShipSunk() ? (
@@ -89,12 +89,12 @@ const Board = (props: Props) => {
 			) : null}
 
 			{/* Message Board */}
-			<div className="bg-white border-black border-b-4 font-semibold text-black px-2 py-8 ">
+			<div className="bg-white font-semibold text-black px-2 py-8 ">
 				<MessageBoard message={message} player={player} />
 			</div>
 
 			{/* GameBoard */}
-			<div className="">
+			<div className="border-2 border-blue-700">
 				{board.map((value: TboardData[], i) => {
 					return (
 						<div key={i} className="grid grid-cols-10 gap-0">
@@ -102,7 +102,7 @@ const Board = (props: Props) => {
 								return (
 									<div
 										key={j}
-										className="w-[45px] h-[40px] hover:cursor-crosshair bg-white border border-purple-400"
+										className="w-[45px] h-[40px] hover:cursor-crosshair bg-white border border-slate-300"
 										onClick={() => {
 											shot(i, j);
 										}}>
@@ -113,7 +113,7 @@ const Board = (props: Props) => {
 												className={`w-full h-full hover:cursor-not-allowed text-center bg-${
 													typeof data === "object" && data.getColor()
 												}-500`}>
-												<span className="text-4xl text-white font-bold">X</span>
+												<span className="text-xl text-white mt-[5px] inline-block">x</span>
 											</div>
 										) : missIndex.some((element) =>
 												element.x === i && element.y === j ? true : false
@@ -122,7 +122,7 @@ const Board = (props: Props) => {
 												<div className="w-3 h-3 bg-black rounded-full"></div>
 											</div>
 										) : (
-											<div></div>
+											<div className=""></div>
 										)}
 									</div>
 								);

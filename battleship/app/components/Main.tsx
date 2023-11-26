@@ -4,6 +4,7 @@ import Board from "./main_component/Board";
 import Sidebar from "./other_component/Sidebar";
 import Start from "./main_component/Start";
 import { IreturnGameBoard, TboardData } from "../factories/Gameboard";
+import Footer from "./Footer";
 
 const Main = () => {
 	const [start, setStart] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const Main = () => {
 	player2.randomlyAddShip();
 
 	return (
-		<div className="relative bg-white w-screen min-h-screen flex justify-center items-center">
+		<div className="relative bg-white w-screen min-h-screen flex flex-col justify-center items-center">
 			{/* {!start ? (
 				<div className="fixed bg-red-300 left-0 w-[30%] min-h-screen overflow-y-scroll rounded-sm bg-gradient-to-r from-rose-400 to-red-500">
 					<Sidebar />
@@ -50,6 +51,8 @@ const Main = () => {
 					/>
 				</div>
 			)}
+
+			<Footer/>
 		</div>
 	);
 };
